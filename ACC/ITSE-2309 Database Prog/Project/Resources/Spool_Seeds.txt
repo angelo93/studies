@@ -1,0 +1,9 @@
+-- code execution structure
+set pagesize 52
+set linesize 100
+set echo on
+-- output file
+spool D:\Seed_Results.txt
+-- input code
+@ D:\2.table_seeds.txt
+spool off

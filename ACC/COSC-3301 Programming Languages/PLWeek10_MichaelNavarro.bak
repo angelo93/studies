@@ -1,0 +1,9 @@
+#lang racket
+
+(require racket/draw)  ; graphics library
+
+(define imageWidth 128)
+(define imageHeight 128)
+
+(define myTarget (make-bitmap imageWidth imageHeight)) ; A bitmap
+(define dc (new bitmap-dc% [bitmap myTarget])) ; a drawing context

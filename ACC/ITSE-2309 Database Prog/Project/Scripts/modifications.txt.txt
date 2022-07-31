@@ -1,0 +1,32 @@
+------------------------- MODIFICATION 1 -------------------------
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('180', 'Kansas City', 'MO');
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('KCI', '180', 'Kansas City Internat. Airport');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('200', 'MEM', 'KCI');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('421', 'KCI', 'MEM');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('200', '02-DEC-2020', 'T300-009', 'TBD', 'TBD');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('421', '02-DEC-2020', 'T300-009', '1730', '1915');
+
+ COMMIT;
+
+SELECT *
+  FROM City;
+
+SELECT *
+  FROM Airport;
+
+SELECT *
+  FROM Route;
+
+SELECT *
+  FROM Flt_Sch;

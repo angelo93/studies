@@ -1,0 +1,78 @@
+#lang racket
+;-------------------- Start Binary Tree Insert --------------------
+; Begin Insert
+(define (insert binary_tree num)
+  (cond
+    ;-------------------- Start Break Cases --------------------
+    
+    ; Case 1: Empty tree
+    [(= (length binary_tree) 0)
+     (list num)]
+    ; Case 2: No leaves, new leaf less than or equal to current branch root
+    [(and (= (length binary_tree) 1) (<= num (car binary_tree)))
+     (append binary_tree (list (list num) '()))]
+    ; Case 3: No leaves, new leaf greater than current branch root
+    [(and (= (length binary_tree) 1) (> num (car binary_tree)))
+     (append binary_tree (list '() (list num)))]
+    ; Case 4: Current branch has one leaf && Current leaf is greater than branch root &&
+    ;         New leaf less than or equal to current branch root
+    [(and (and (= (length (flatten binary_tree)) 2) (> (second (flatten binary_tree)) (car binary_tree))) (<= num (car binary_tree)))
+     (list (car binary_tree) (list num) (list (second (flatten binary_tree))))]
+    ; Case 5: Current branch has one leaf && Current leaf is less than or equal to branch root &&
+    ;         New leaf greater than branch root
+    [(and (and (= (length (flatten binary_tree)) 2) (<= (second (flatten binary_tree)) (car binary_tree))) (> num (car binary_tree)))
+     (list (car binary_tree) (list (second (flatten binary_tree))) (list num))]
+
+    ;-------------------- Start Recursion --------------------
+    
+    ; Case 6: New leaf less than or equal to current root, more tree to traverse remains
+    [(<= num (car binary_tree))
+     (list (car binary_tree) (insert (cadr binary_tree) num) (caddr binary_tree))]
+    ; Case 7: Num is greater than the root of current branch
+    [else
+     (list (car binary_tree) (cadr binary_tree) (insert (caddr binary_tree) num))]) 
+  ) 
+; End insert
+
+;-------------------- Start List To Tree --------------------
+(define (list-to-tree num_list binary_tree)
+  ; Define temp_list
+  (define temp_list '())
+  ; Define temp_tree
+  (define temp_tree '())
+  
+  (cond
+    ; Case 1: If list is empty, insert first value as root node and set to temp_tree,
+    [(null? binary_tree)
+     (set! temp_tree (list (car num_list)))
+     
+     ; set temp_list as rest of num_list
+     (set! temp_list (rest num_list))]
+    
+    ; Case 2: Else, set temp_tree as a copy of binary_tree, same for list
+    [else
+     (set! temp_tree (append binary_tree temp_tree))
+     (set! temp_list (append num_list temp_list))]) 
+
+  ; For every num in temp_list
+  
+  (for/list ([num temp_list])
+    (set! temp_tree(insert temp_tree num)))
+
+  (display temp_tree)
+  )
+; End list-to-tree
+
+;-------------------- Start Tests --------------------
+
+(display "First test Case List: [5, 4, 3, 2]\n")
+(list-to-tree '(5 4 3 2) '())
+
+(display "\n\nSecond Test Case List: [22, 25, 7, 16, 8, 34, 67, 7, 32, 17, 8, 4, 5, 3]\n")
+(list-to-tree '(22 25 7 16 8 34 67 7 32 17 8 4  5 3) '())
+
+(display "\n\nThird Test Case List: [6, 3, 2, 5, 7, 9]\n")
+(list-to-tree '(6 3 2 5 7 9) '())
+
+(display "\n\nFourth Test Case List: Insert 23 to (6 (3 (2) (5)) (7 () (9))))\n")
+(list-to-tree  '(23) '(6 (3 (2) (5)) (7 () (9))))

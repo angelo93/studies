@@ -1,0 +1,44 @@
+#lang racket
+(require racket/draw)
+
+(define HEIGHT 200)
+(define WIDTH 400)
+(define UNIT_PER_PIXEL 0.012)
+
+(define HEIGHT/2 (/ HEIGHT 2))
+(define WIDTH/2 (/ WIDTH 2))
+
+(define X_RANGE (in-range 0 WIDTH 1))
+(define Y_RANGE (in-range 0 HEIGHT 1))
+(define (x-pixel-to-coord x)
+  (* (- x WIDTH/2) UNIT_PER_PIXEL))
+(define (y-pixel-to-coord y)
+  (* (- y HEIGHT/2) UNIT_PER_PIXEL))
+
+(define (f z c) (+ (expt z 2) c))
+(define (>2 z) (> (magnitude z) 2))
+
+;(define (converges? c)
+;  (let _converges? ([z 0] [c c] [i 30])
+;    (cond
+;       [(>2 z) #f]
+;       [(positive? i) (_converges? (f z c) c (sub1 i))]
+;       [(zero? i) (not (>2 z))])))
+
+(define (converges? c [z 0] [i 30])
+  (cond
+    [(>2 z) #f]
+    [(positive? i) (converges? c (f z c) (sub1 i))]
+    [(zero? i) (not (>2 z))]))
+
+(define bmp (make-bitmap WIDTH HEIGHT))
+(define dc (new bitmap-dc% [bitmap bmp]))
+
+(for ([x X_RANGE])
+  (for ([y Y_RANGE])
+    (let ([complex (make-rectangular (x-pixel-to-coord x) (y-pixel-to-coord y))])
+      (when (converges? complex)
+          (send dc set-pixel x y (make-color 10 10 10))))))
+
+bmp
+(send bmp save-file "mandelbrot.png" 'png)

@@ -1,0 +1,12 @@
+#lang racket
+(define (insert BST n)
+  (cond
+    ((null? BST)
+     (list empty n empty))
+    ((< n (cadr BST))
+     (list (insert (car BST) n) (cadr BST) (caddr BST)))
+    ((> n (cadr BST))
+     (list (car BST) (cadr BST) (insert (caddr BST) n)))
+    (else BST)))
+
+(define sorted_tree '(6 (3 (2) (5)) (7 () (9))))

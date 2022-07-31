@@ -1,0 +1,324 @@
+SQL> -- input code
+SQL> @ D:\Lab2_Scripts.txt
+SQL> -- Michael Navarro
+SQL> -- Lab 2 ITSE2309
+SQL> 
+SQL> -- Problem #1
+SQL> SELECT CUSTOMER.COMPANY,
+  2  	    STOCK.DESCRIPTION,
+  3  	    MANUFACT.MANU_NAME,
+  4  	    SUM(ITEMS.QUANTITY) as QUANTITY,
+  5  	    SUM(ITEMS.TOTAL_PRICE) as TOTAL_PRICE
+  6   FROM  CUSTOMER
+  7  	     JOIN ORDERS ON CUSTOMER.CUSTOMER_NUM = ORDERS.CUSTOMER_NUM
+  8  	     JOIN ITEMS ON ORDERS.ORDER_NUM = ITEMS.ORDER_NUM
+  9  	     JOIN STOCK ON ITEMS.STOCK_NUM = STOCK.STOCK_NUM
+ 10  	      AND ITEMS.MANU_CODE = STOCK.MANU_CODE
+ 11  	     JOIN MANUFACT ON ITEMS.MANU_CODE = MANUFACT.MANU_CODE
+ 12   GROUP BY CUSTOMER.COMPANY, STOCK.DESCRIPTION, MANUFACT.MANU_NAME
+ 13  ORDER BY CUSTOMER.COMPANY, STOCK.DESCRIPTION;
+
+COMPANY              DESCRIPTION     MANU_NAME         QUANTITY TOTAL_PRICE                         
+-------------------- --------------- --------------- ---------- -----------                         
+AA athletics         baseball gloves Smith                    1         450                         
+AA athletics         volleyball      Anza                     1         840                         
+AA athletics         volleyball net  Anza                     5         100                         
+All Sports Supplies  baseball bat    Husky                    1         240                         
+All Sports Supplies  football        Husky                    1         960                         
+Gold Medal Sports    tennis ball     Smith                    1          36                         
+Gold Medal Sports    tennis balls    Anza                     1          48                         
+Kids Korner          baseball        Hero                     1         126                         
+Kids Korner          baseball bat    Husky                    1         240                         
+Kids Korner          baseball gloves Hero                     1         250                         
+Kids Korner          basketball      Hero                     1         600                         
+Kids Korner          football        Hero                     1         480                         
+Kids Korner          volleyball      Anza                     1         840                         
+Kids Korner          volleyball net  Anza                    10         200                         
+Olympic City         tennis ball     Smith                    1          36                         
+Olympic City         tennis balls    Anza                     1          48                         
+Olympic City         tennis racquet  Anza                    10         198                         
+Olympic City         tennis racquet  Norge                   10         280                         
+Play Ball!           baseball gloves Hero                     1         250                         
+Play Ball!           tennis ball     Smith                    1          36                         
+Play Ball!           tennis balls    Anza                     1          48                         
+Play Ball!           tennis racquet  Anza                    11       217.8                         
+Play Ball!           volleyball      Anza                     1         840                         
+Play Ball!           volleyball net  Anza                     3          60                         
+Runners and Others   tennis ball     Smith                    1          36                         
+Runners and Others   tennis balls    Anza                     1          48                         
+Runners and Others   tennis racquet  Anza                     5          99                         
+Runners and Others   tennis racquet  Norge                    5         190                         
+Runners and Others   tennis racquet  Smith                    5         125                         
+Sports Center        baseball gloves Smith                    1         450                         
+Watson and Son       baseball        Hero                     1         126                         
+Watson and Son       baseball bat    Husky                    1         240                         
+Watson and Son       baseball gloves Hero                     1         960                         
+Watson and Son       baseball gloves Husky                    1         800                         
+Watson and Son       football        Hero                     1         480                         
+Watson and Son       football        Husky                    1         960                         
+
+36 rows selected.
+
+SQL> 
+SQL> -- Problem #2
+SQL> SELECT ORDERS.ORDER_NUM,
+  2  	    ORDERS.ORDER_DATE,
+  3  	    CUSTOMER.COMPANY,
+  4  	    ORDERS.SHIP_DATE
+  5   FROM ORDERS,
+  6  	   CUSTOMER
+  7   WHERE ORDERS.CUSTOMER_NUM = CUSTOMER.CUSTOMER_NUM
+  8    AND  SHIP_DATE BETWEEN '25-DEC-1999' AND '05-JAN-2000'
+  9  ORDER BY CUSTOMER.COMPANY, ORDERS.ORDER_NUM;
+
+ ORDER_NUM ORDER_DAT COMPANY              SHIP_DATE                                                 
+---------- --------- -------------------- ---------                                                 
+      1010 31-DEC-99 Gold Medal Sports    02-JAN-00                                                 
+      1007 30-DEC-99 Kids Korner          03-JAN-00                                                 
+      1012 31-DEC-99 Kids Korner          05-JAN-00                                                 
+      1011 31-DEC-99 Play Ball!           02-JAN-00                                                 
+      1014 31-DEC-99 Watson and Son       04-JAN-00                                                 
+
+SQL> 
+SQL> -- Problem #3
+SQL> SELECT COUNT(CUSTOMER.CUSTOMER_NUM)
+  2   FROM CUSTOMER
+  3   LEFT JOIN ORDERS ON ORDERS.CUSTOMER_NUM = CUSTOMER.CUSTOMER_NUM
+  4   WHERE ORDERS.CUSTOMER_NUM IS NULL;
+
+COUNT(CUSTOMER.CUSTOMER_NUM)                                                                        
+----------------------------                                                                        
+                           9                                                                        
+
+SQL> 
+SQL> -- Problem #4
+SQL> SELECT DISTINCT ORDERS.CUSTOMER_NUM,
+  2  	    STOCK.STOCK_NUM,
+  3  	    STOCK.DESCRIPTION
+  4   FROM ORDERS
+  5    INNER JOIN ITEMS
+  6  	ON ORDERS.ORDER_NUM = ITEMS.ORDER_NUM
+  7    INNER JOIN STOCK
+  8  	ON ITEMS.STOCK_NUM = STOCK.STOCK_NUM
+  9   WHERE STOCK.DESCRIPTION LIKE 'tennis%'
+ 10    OR   STOCK.DESCRIPTION LIKE 'volleyball%';
+
+CUSTOMER_NUM  STOCK_NUM DESCRIPTION                                                                 
+------------ ---------- ---------------                                                             
+         104          6 tennis ball                                                                 
+         116          6 tennis ball                                                                 
+         116          6 tennis balls                                                                
+         117          8 volleyball                                                                  
+         104          6 tennis balls                                                                
+         115          6 tennis balls                                                                
+         117          9 volleyball net                                                              
+         104          5 tennis racquet                                                              
+         116          5 tennis racquet                                                              
+         112          6 tennis ball                                                                 
+         112          6 tennis balls                                                                
+         110          8 volleyball                                                                  
+         110          9 volleyball net                                                              
+         115          6 tennis ball                                                                 
+         104          8 volleyball                                                                  
+         104          9 volleyball net                                                              
+         112          5 tennis racquet                                                              
+
+17 rows selected.
+
+SQL> 
+SQL> -- Problem #5
+SQL> CREATE TABLE Professor
+  2  (Prof_ID NUMBER(3) Constraint pk_Professor Primary Key,
+  3  Prof_Lname VARCHAR2(15) NOT NULL,
+  4  Prof_Hiredate DATE,
+  5  Prof_Sal NUMBER(8,2),
+  6  Prof_Dept CHAR(6)
+  7  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE Student
+  2  (Stu_ID NUMBER(4) Constraint pk_Student Primary Key,
+  3  Stu_Lname VARCHAR2(15) NOT NULL,
+  4  Stu_Major CHAR(6),
+  5  Stu_CredHrs NUMBER(4),
+  6  Stu_GradePts NUMBER(5),
+  7  Prof_ID NUMBER(3),
+  8  CONSTRAINT fk_Student_Prof_ID FOREIGN KEY(Prof_ID)
+  9  REFERENCES Professor
+ 10  );
+
+Table created.
+
+SQL> 
+SQL> DESCRIBE Professor;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ PROF_ID                                               NOT NULL NUMBER(3)
+ PROF_LNAME                                            NOT NULL VARCHAR2(15)
+ PROF_HIREDATE                                                  DATE
+ PROF_SAL                                                       NUMBER(8,2)
+ PROF_DEPT                                                      CHAR(6)
+
+SQL> DESCRIBE Student;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ STU_ID                                                NOT NULL NUMBER(4)
+ STU_LNAME                                             NOT NULL VARCHAR2(15)
+ STU_MAJOR                                                      CHAR(6)
+ STU_CREDHRS                                                    NUMBER(4)
+ STU_GRADEPTS                                                   NUMBER(5)
+ PROF_ID                                                        NUMBER(3)
+
+SQL> 
+SQL> -- Problem #6
+SQL> INSERT INTO Professor (Prof_ID, Prof_Lname, Prof_Hiredate, Prof_Sal, Prof_dept)
+  2   VALUES ('123', 'Hilbert', '20-MAY-1992', '58000.00', 'MATH');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Professor (Prof_ID, Prof_Lname, Prof_Hiredate, Prof_Sal, Prof_dept)
+  2   VALUES ('243', 'Newell', '15-JUL-1997', '65500.00', 'CMPSCI');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Professor (Prof_ID, Prof_Lname, Prof_Hiredate, Prof_Sal, Prof_dept)
+  2   VALUES ('389', 'Lessing', '04-APR-1988', '40250.00', 'ENG');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> INSERT INTO Student (Stu_ID, Stu_Lname, Stu_Major, Stu_CredHrs, Stu_GradePts, Prof_ID)
+  2   VALUES ('2001', 'Parker', 'CMPSCI', '52', '160', '243');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Student (Stu_ID, Stu_Lname, Stu_Major, Stu_CredHrs, Stu_GradePts, Prof_ID)
+  2   VALUES ('2166', 'Smith', 'ENG', '30', '75', '389');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Student (Stu_ID, Stu_Lname, Stu_Major, Stu_CredHrs, Stu_GradePts, Prof_ID)
+  2   VALUES ('3200', 'Garcia', 'MATH', '62', '248', '123');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Student (Stu_ID, Stu_Lname, Stu_Major, Stu_CredHrs, Stu_GradePts, Prof_ID)
+  2   VALUES ('4520', 'Smith', 'CMPSCI', '45', '157', NULL);
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> SELECT *
+  2   FROM Professor;
+
+   PROF_ID PROF_LNAME      PROF_HIRE   PROF_SAL PROF_D                                              
+---------- --------------- --------- ---------- ------                                              
+       123 Hilbert         20-MAY-92      58000 MATH                                                
+       243 Newell          15-JUL-97      65500 CMPSCI                                              
+       389 Lessing         04-APR-88      40250 ENG                                                 
+
+SQL> SELECT *
+  2   FROM Student;
+
+    STU_ID STU_LNAME       STU_MA STU_CREDHRS STU_GRADEPTS    PROF_ID                               
+---------- --------------- ------ ----------- ------------ ----------                               
+      2001 Parker          CMPSCI          52          160        243                               
+      2166 Smith           ENG             30           75        389                               
+      3200 Garcia          MATH            62          248        123                               
+      4520 Smith           CMPSCI          45          157                                          
+
+SQL> 
+SQL> -- Problem #7a
+SQL> DELETE FROM Professor
+  2   WHERE Prof_ID = '389';
+DELETE FROM Professor
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (ITSE2309.FK_STUDENT_PROF_ID) violated - child record found 
+
+
+SQL> 
+SQL> -- ERROR OUTPUT
+SQL> -- ERROR at line 1:
+SQL> -- ORA-02292: integrity constraint (SANDBOX2309.FK_STUDENT_PROF_ID) violated -
+SQL> -- child record found
+SQL> 
+SQL> -- Problem #7b
+SQL> DELETE FROM Student
+  2   WHERE Stu_ID = '2166';
+
+1 row deleted.
+
+SQL> 
+SQL> -- Problem #7c
+SQL> DELETE FROM Professor
+  2   WHERE Prof_ID = '389';
+
+1 row deleted.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> -- The first time was unsuccessful because the referenced professor entity was being referenced by a child entity in the Student table.
+SQL> -- In order to bypass this error one would have to do a CASCADE delete,
+SQL> -- however this is bad form, per say, since this can lead to unintended consequences when dealing with large datasets.
+SQL> -- In short this is an example of the referential integrity rule at play.
+SQL> 
+SQL> -- Problem #8a
+SQL> UPDATE Student
+  2   SET Prof_ID = '243'
+  3   WHERE Stu_ID = '4520';
+
+1 row updated.
+
+SQL> 
+SQL> -- Problem #8b
+SQL> UPDATE Professor
+  2   SET Prof_Sal = Prof_Sal * 1.10;
+
+2 rows updated.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> SELECT *
+  2   FROM Professor;
+
+   PROF_ID PROF_LNAME      PROF_HIRE   PROF_SAL PROF_D                                              
+---------- --------------- --------- ---------- ------                                              
+       123 Hilbert         20-MAY-92      63800 MATH                                                
+       243 Newell          15-JUL-97      72050 CMPSCI                                              
+
+SQL> SELECT *
+  2   FROM Student;
+
+    STU_ID STU_LNAME       STU_MA STU_CREDHRS STU_GRADEPTS    PROF_ID                               
+---------- --------------- ------ ----------- ------------ ----------                               
+      2001 Parker          CMPSCI          52          160        243                               
+      3200 Garcia          MATH            62          248        123                               
+      4520 Smith           CMPSCI          45          157        243                               
+
+SQL> spool off

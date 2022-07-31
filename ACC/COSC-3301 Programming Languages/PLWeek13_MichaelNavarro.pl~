@@ -1,0 +1,14 @@
+sum(N,M,R) :- sum(N,M,0,R).
+
+ sum(N,M,A,R) :-
+        ( M > 0
+     -> A1 is A + N^M, %% N**M,
+          M1 is M-1,
+          sum(N,M1,A1,R)
+        ; R is A + 1
+).
+
+/*
+Test test
+asd 
+*/

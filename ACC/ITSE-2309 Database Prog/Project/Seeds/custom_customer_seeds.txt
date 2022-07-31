@@ -1,0 +1,71 @@
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1001', 'Alpha');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1002', 'Beta');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1003', 'Gamma');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1004', 'Delta');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1005', 'Epsilon');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1006', 'Zeta');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1007', 'Eta');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1008', 'Theta');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1009', 'Iota');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1010', 'Kappa');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1011', 'Lambda');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1012', 'Mu');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1013', 'Nu');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1014', 'Xi');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1015', 'Omicron');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1016', 'Pi');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1017', 'Rho');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1018', 'Sigma');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1019', 'Tau');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1020', 'Upsilon');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1021', 'Phi');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1022', 'Chi');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1023', 'Psi');
+
+INSERT INTO Customer (Customer_Nbr, Customer_Name)
+ VALUES ('1024', 'Omega');

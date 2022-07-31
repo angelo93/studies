@@ -1,0 +1,26 @@
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1001', 'Ford');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('10014', 'Pfeiffer');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1055', 'Harris');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1058', 'Codd');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1077', 'Nelson');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1080', 'Cassatt');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1100', 'Streep');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1155', 'Lechowick');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1158', 'Hilbert');

@@ -1,0 +1,8 @@
+#lang racket
+; Start polynomial function
+; 5x^2-x-8
+(define (myPolynomial x)
+  (-(-(* 5 (* x x)) x) 8))
+; End polynomial function
+
+(myPolynomial 5)

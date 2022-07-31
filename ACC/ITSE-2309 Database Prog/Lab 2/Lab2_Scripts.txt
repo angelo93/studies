@@ -1,0 +1,140 @@
+-- Michael Navarro
+-- Lab 2 ITSE2309
+
+-- Problem #1
+SELECT CUSTOMER.COMPANY,
+       STOCK.DESCRIPTION,
+       MANUFACT.MANU_NAME,
+       SUM(ITEMS.QUANTITY) as QUANTITY,
+       SUM(ITEMS.TOTAL_PRICE) as TOTAL_PRICE
+ FROM  CUSTOMER
+        JOIN ORDERS ON CUSTOMER.CUSTOMER_NUM = ORDERS.CUSTOMER_NUM
+        JOIN ITEMS ON ORDERS.ORDER_NUM = ITEMS.ORDER_NUM
+        JOIN STOCK ON ITEMS.STOCK_NUM = STOCK.STOCK_NUM
+         AND ITEMS.MANU_CODE = STOCK.MANU_CODE
+        JOIN MANUFACT ON ITEMS.MANU_CODE = MANUFACT.MANU_CODE
+ GROUP BY CUSTOMER.COMPANY, STOCK.DESCRIPTION, MANUFACT.MANU_NAME
+ORDER BY CUSTOMER.COMPANY, STOCK.DESCRIPTION;
+
+-- Problem #2
+SELECT ORDERS.ORDER_NUM,
+       ORDERS.ORDER_DATE,
+       CUSTOMER.COMPANY,
+       ORDERS.SHIP_DATE
+ FROM ORDERS,
+      CUSTOMER
+ WHERE ORDERS.CUSTOMER_NUM = CUSTOMER.CUSTOMER_NUM
+  AND  SHIP_DATE BETWEEN '25-DEC-1999' AND '05-JAN-2000'
+ORDER BY CUSTOMER.COMPANY, ORDERS.ORDER_NUM;
+
+-- Problem #3
+SELECT COUNT(CUSTOMER.CUSTOMER_NUM)
+ FROM CUSTOMER
+ LEFT JOIN ORDERS ON ORDERS.CUSTOMER_NUM = CUSTOMER.CUSTOMER_NUM
+ WHERE ORDERS.CUSTOMER_NUM IS NULL;
+
+-- Problem #4
+SELECT DISTINCT ORDERS.CUSTOMER_NUM,
+       STOCK.STOCK_NUM,
+       STOCK.DESCRIPTION
+ FROM ORDERS
+  INNER JOIN ITEMS 
+   ON ORDERS.ORDER_NUM = ITEMS.ORDER_NUM
+  INNER JOIN STOCK
+   ON ITEMS.STOCK_NUM = STOCK.STOCK_NUM
+ WHERE STOCK.DESCRIPTION LIKE 'tennis%'
+  OR   STOCK.DESCRIPTION LIKE 'volleyball%';
+
+-- Problem #5
+CREATE TABLE Professor
+(Prof_ID NUMBER(3) Constraint pk_Professor Primary Key,
+Prof_Lname VARCHAR2(15) NOT NULL,
+Prof_Hiredate DATE,
+Prof_Sal NUMBER(8,2),
+Prof_Dept CHAR(6)
+);
+
+CREATE TABLE Student
+(Stu_ID NUMBER(4) Constraint pk_Student Primary Key,
+Stu_Lname VARCHAR2(15) NOT NULL,
+Stu_Major CHAR(6),
+Stu_CredHrs NUMBER(4),
+Stu_GradePts NUMBER(5),
+Prof_ID NUMBER(3),
+CONSTRAINT fk_Student_Prof_ID FOREIGN KEY(Prof_ID)
+REFERENCES Professor
+);
+
+DESCRIBE Professor;
+DESCRIBE Student;
+
+-- Problem #6
+INSERT INTO Professor (Prof_ID, Prof_Lname, Prof_Hiredate, Prof_Sal, Prof_dept)
+ VALUES ('123', 'Hilbert', '20-MAY-1992', '58000.00', 'MATH');
+
+INSERT INTO Professor (Prof_ID, Prof_Lname, Prof_Hiredate, Prof_Sal, Prof_dept)
+ VALUES ('243', 'Newell', '15-JUL-1997', '65500.00', 'CMPSCI');
+
+INSERT INTO Professor (Prof_ID, Prof_Lname, Prof_Hiredate, Prof_Sal, Prof_dept)
+ VALUES ('389', 'Lessing', '04-APR-1988', '40250.00', 'ENG');
+
+COMMIT;
+
+INSERT INTO Student (Stu_ID, Stu_Lname, Stu_Major, Stu_CredHrs, Stu_GradePts, Prof_ID)
+ VALUES ('2001', 'Parker', 'CMPSCI', '52', '160', '243');
+
+INSERT INTO Student (Stu_ID, Stu_Lname, Stu_Major, Stu_CredHrs, Stu_GradePts, Prof_ID)
+ VALUES ('2166', 'Smith', 'ENG', '30', '75', '389');
+
+INSERT INTO Student (Stu_ID, Stu_Lname, Stu_Major, Stu_CredHrs, Stu_GradePts, Prof_ID)
+ VALUES ('3200', 'Garcia', 'MATH', '62', '248', '123');
+
+INSERT INTO Student (Stu_ID, Stu_Lname, Stu_Major, Stu_CredHrs, Stu_GradePts, Prof_ID)
+ VALUES ('4520', 'Smith', 'CMPSCI', '45', '157', NULL);
+
+COMMIT;
+
+SELECT *
+ FROM Professor;
+SELECT *
+ FROM Student;
+
+-- Problem #7a
+DELETE FROM Professor
+ WHERE Prof_ID = '389';
+
+-- ERROR OUTPUT
+-- ERROR at line 1:
+-- ORA-02292: integrity constraint (SANDBOX2309.FK_STUDENT_PROF_ID) violated -
+-- child record found
+
+-- Problem #7b
+DELETE FROM Student
+ WHERE Stu_ID = '2166';
+
+-- Problem #7c
+DELETE FROM Professor
+ WHERE Prof_ID = '389';
+
+COMMIT;
+
+-- The first time was unsuccessful because the referenced professor entity was being referenced by a child entity in the Student table.
+-- In order to bypass this error one would have to do a CASCADE delete,
+-- however this is bad form, per say, since this can lead to unintended consequences when dealing with large datasets.
+-- In short this is an example of the referential integrity rule at play.
+
+-- Problem #8a
+UPDATE Student
+ SET Prof_ID = '243'
+ WHERE Stu_ID = '4520';
+
+-- Problem #8b
+UPDATE Professor
+ SET Prof_Sal = Prof_Sal * 1.10;
+
+COMMIT;
+
+SELECT *
+ FROM Professor;
+SELECT *
+ FROM Student;

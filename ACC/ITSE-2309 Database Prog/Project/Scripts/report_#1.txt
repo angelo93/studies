@@ -1,0 +1,26 @@
+CLEAR BREAKS;
+CLEAR COLUMNS;
+CLEAR COMPUTES;
+TTITLE OFF;
+
+CREATE VIEW REPORT1(Serial#, Type, Description, Capacity, Range) AS
+SELECT Aircraft.Serial_Nbr, Model_Specs.Model_Nbr, Model_Specs.Description, Model_Specs.Capacity, Model_Specs.Range
+  FROM Aircraft
+       LEFT JOIN Model_Specs ON Aircraft.Model_Nbr = Model_Specs.Model_Nbr;
+
+COLUMN DUMMY HEADING '' FORMAT A20
+COLUMN Description FORMAT A22
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'MM/DD/YY';
+
+TTITLE LEFT _DATE CENTER 'TERRA FIRMA AIRLINES' RIGHT 'PAGE:' SQL.PNO -
+SKIP 1 CENTER 'AIRCRAFT REPORT' SKIP 2  
+
+BREAK ON REPORT
+
+COMPUTE SUM LABEL 'Total Capacity:' AVG LABEL 'Average Capacity:' OF Capacity ON REPORT
+COMPUTE COUNT LABEL 'Number of Aircraft:' OF Serial# ON REPORT
+
+SELECT '  ' DUMMY, Serial#, Type, Description, Capacity, Range
+  FROM REPORT1
+  ORDER BY Serial#;

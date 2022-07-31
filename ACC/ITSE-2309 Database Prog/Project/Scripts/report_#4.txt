@@ -1,0 +1,37 @@
+CLEAR BREAKS;
+CLEAR COLUMNS;
+CLEAR COMPUTES;
+TTITLE OFF;
+
+CREATE VIEW REPORT4(Flt_Date, Flt_Nbr, Serial_Nbr, Reserved, Available) AS
+SELECT Flt_Sch.Flight_Date,
+       Flt_Sch.Flight_Nbr,
+       Flt_Sch.Serial_Nbr,
+       COUNT(RSVN.Cust_Nbr),
+       (Model_Specs.Capacity-COUNT(RSVN.Cust_Nbr))
+  FROM Flt_Sch
+    LEFT JOIN Aircraft ON Flt_Sch.Serial_Nbr = Aircraft.Serial_Nbr
+    LEFT JOIN Model_Specs ON Aircraft.Model_Nbr = Model_Specs.Model_Nbr 
+    LEFT JOIN RSVN on Flt_Sch.Flight_Date = RSVN.Flight_Date
+      AND Flt_Sch.Flight_Nbr = RSVN.Flight_Nbr
+GROUP BY Flt_Sch.Flight_Date, Flt_Sch.Flight_Nbr, Flt_Sch.Serial_Nbr, Model_Specs.Capacity
+ORDER BY Flt_Sch.Flight_Date, Flt_Sch.Flight_Nbr, Flt_Sch.Serial_Nbr;
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'MM/DD/YYYY';
+
+COLUMN Flt_Date HEADING 'Flt|Date' FORMAT A15
+COLUMN Flt_Nbr HEADING 'Flt|Nbr' FORMAT A5
+COLUMN Serial_Nbr HEADING 'Aircraft|Serial #' FORMAT A12
+COLUMN Reserved HEADING '# Seats|Reserved' FORMAT 99999
+COLUMN Available HEADING '# Seats|Available' FORMAT 99999
+
+TTITLE LEFT _DATE CENTER 'TERRA FIRMA AIRLINES' RIGHT 'PAGE:' SQL.PNO -
+SKIP 1 CENTER 'SCHEDULED FLIGHT SUMMARY' SKIP 2 
+
+BREAK ON Flt_Date SKIP 1
+
+COMPUTE COUNT LABEL 'Total Flights:' -
+SUM LABEL 'Seats Reserved:' OF Reserved ON Flt_Date
+
+SELECT *
+  FROM REPORT4;

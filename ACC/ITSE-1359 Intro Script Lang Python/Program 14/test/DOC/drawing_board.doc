@@ -1,0 +1,28 @@
+IDEA: Program to rename file extensions and organize by file extension or by filename.
+
+OUTLINE: Boot Up
+            1. Work in current directory (where the script was ran)
+            2. Enter specific directory
+         Main Menu
+            1. Rename file extensions (IN: old extension, IN: new extension)
+            2. Organize by file extension
+                RESULT: 
+                    root_path\TXT
+                        -> file1.txt
+                        -> file2.txt
+                        -> fileN.txt
+            3. Organize by filename
+                RESULT: 
+                    root_path\FileA
+                        -> filea.png
+                        -> fileA.txt
+                        -> FileA.py
+            4. Organize into alphabetical folders. (Option for both of the functions above)
+                RESULT: 
+                    root_path\F\FileA
+                        -> filea.png
+                        -> fileA.txt
+                        -> FileA.py
+            5. Delete empty directories (Cleans up directory for ease of use)
+            6. Change working directory (IN: New directory)
+            7. Exit

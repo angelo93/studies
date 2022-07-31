@@ -1,0 +1,198 @@
+SQL> -- your code
+SQL> @ D:\Lab1_Scripts.txt
+SQL> -- Michael Navarro
+SQL> -- Lab 1 ITSE2309
+SQL> 
+SQL> -- Problem #1
+SQL> SELECT *
+  2   FROM STOCK;
+
+ STOCK_NUM MAN DESCRIPTION     UNIT_PRICE UNIT UNIT_DESCR                                           
+---------- --- --------------- ---------- ---- ---------------                                      
+         1 HRO baseball gloves        250 case 10 gloves/case                                       
+         1 HSK baseball gloves        800 case 10 gloves/case                                       
+         1 SMT baseball gloves        450 case 10 gloves/case                                       
+         2 HRO baseball               126 case 24/case                                              
+         3 HSK baseball bat           240 case 12/case                                              
+         4 HSK football               960 case 24/case                                              
+         4 HRO football               480 case 24/case                                              
+         5 NRG tennis racquet          28 each each                                                 
+         5 SMT tennis racquet          25 each each                                                 
+         5 ANZ tennis racquet        19.8 each each                                                 
+         6 SMT tennis ball             36 case 24 cans/case                                         
+         6 ANZ tennis balls            48 case 24 cans/case                                         
+         7 HRO basketball             600 case 24/case                                              
+         8 ANZ volleyball             840 case 24/case                                              
+         9 ANZ volleyball net          20 each each                                                 
+
+15 rows selected.
+
+SQL> 
+SQL> -- Problem #2
+SQL> SELECT LNAME, FNAME, COMPANY
+  2   FROM CUSTOMER
+  3  ORDER BY COMPANY;
+
+LNAME           FNAME           COMPANY                                                             
+--------------- --------------- --------------------                                                
+Jaeger          Roy             AA athletics                                                        
+Pauli           Ludwig          All Sports Supplies                                                 
+Ream            Charles         Athletic Supplies                                                   
+Baxter          Dick            Blue Ribbon Sports                                                  
+Grant           Alfred          Gold Medal Sports                                                   
+Sipes           Arnold          Kids Korner                                                         
+Vector          Raymond         Los Altos Sports                                                    
+Parmelee        Jean            Olympic City                                                        
+Currie          Phillip         Phil's Sports                                                       
+Higgins         Anthony         Play Ball!                                                          
+Quinn           Donald          Quinn's Sports                                                      
+Lawson          Margaret        Runners and Others                                                  
+Miller          Jane            Sport Stuff                                                         
+Albertson       Frank           Sporting Place                                                      
+Keyes           Frances         Sports Center                                                       
+Sadler          Carole          Sports Spots                                                        
+Beatty          Lana            Sportstown                                                          
+Watson          George          Watson and Son                                                      
+
+18 rows selected.
+
+SQL> 
+SQL> -- Problem #3
+SQL> SELECT COMPANY
+  2   FROM CUSTOMER
+  3   WHERE CITY IN ('Sunnyvale', 'Redwood City', 'San Francisco');
+
+COMPANY                                                                                             
+--------------------                                                                                
+All Sports Supplies                                                                                 
+Sports Spots                                                                                        
+Play Ball!                                                                                          
+Quinn's Sports                                                                                      
+Sport Stuff                                                                                         
+AA athletics                                                                                        
+Sports Center                                                                                       
+Sporting Place                                                                                      
+Kids Korner                                                                                         
+
+9 rows selected.
+
+SQL> 
+SQL> -- Problem #4
+SQL> SELECT ORDER_NUM, ORDER_DATE, CUSTOMER_NUM, SHIP_DATE, PAID_DATE
+  2   FROM ORDERS
+  3   WHERE ORDER_DATE BETWEEN '31-DEC-1999' AND '03-JAN-2000';
+
+ ORDER_NUM ORDER_DAT CUSTOMER_NUM SHIP_DATE PAID_DATE                                               
+---------- --------- ------------ --------- ---------                                               
+      1010 31-DEC-99          115 02-JAN-00 22-JAN-00                                               
+      1011 31-DEC-99          104 02-JAN-00 13-JAN-00                                               
+      1012 31-DEC-99          117 05-JAN-00                                                         
+      1013 03-JAN-00          104 08-JAN-00 17-JAN-00                                               
+      1014 31-DEC-99          106 04-JAN-00 16-JAN-00                                               
+      1015 03-JAN-00          110 08-JAN-00 24-JAN-00                                               
+
+6 rows selected.
+
+SQL> 
+SQL> -- Problem #5
+SQL> SELECT ORDER_NUM, ORDER_DATE, SHIP_CHARGE
+  2   FROM ORDERS
+  3   WHERE SHIP_CHARGE > 15
+  4    AND BACKLOG = 'n';
+
+ ORDER_NUM ORDER_DAT SHIP_CHARGE                                                                    
+---------- --------- -----------                                                                    
+      1002 20-DEC-99        15.3                                                                    
+      1005 30-DEC-99        16.2                                                                    
+      1007 30-DEC-99        25.2                                                                    
+
+SQL> 
+SQL> -- Problem #6
+SQL> SELECT *
+  2   FROM STOCK
+  3   WHERE DESCRIPTION LIKE 'base%'
+  4    AND MANU_CODE LIKE 'H%'
+  5    AND UNIT_PRICE > 200;
+
+ STOCK_NUM MAN DESCRIPTION     UNIT_PRICE UNIT UNIT_DESCR                                           
+---------- --- --------------- ---------- ---- ---------------                                      
+         1 HRO baseball gloves        250 case 10 gloves/case                                       
+         1 HSK baseball gloves        800 case 10 gloves/case                                       
+         3 HSK baseball bat           240 case 12/case                                              
+
+SQL> 
+SQL> -- Problem #7
+SQL> SELECT DISTINCT COMPANY
+  2   FROM CUSTOMER, ORDERS
+  3   WHERE ORDERS.CUSTOMER_NUM = CUSTOMER.CUSTOMER_NUM;
+
+COMPANY                                                                                             
+--------------------                                                                                
+AA athletics                                                                                        
+Olympic City                                                                                        
+Runners and Others                                                                                  
+All Sports Supplies                                                                                 
+Watson and Son                                                                                      
+Gold Medal Sports                                                                                   
+Sports Center                                                                                       
+Kids Korner                                                                                         
+Play Ball!                                                                                          
+
+9 rows selected.
+
+SQL> 
+SQL> -- Problem #8
+SQL> SELECT DISTINCT ORDERS.CUSTOMER_NUM, STOCK.DESCRIPTION
+  2   FROM ORDERS, ITEMS, STOCK
+  3   WHERE ORDERS.CUSTOMER_NUM BETWEEN 104 AND 108
+  4    AND ORDERS.ORDER_NUM = ITEMS.ORDER_NUM
+  5    AND ITEMS.STOCK_NUM = STOCK.STOCK_NUM
+  6  ORDER BY ORDERS.CUSTOMER_NUM ASC, DESCRIPTION ASC;
+
+CUSTOMER_NUM DESCRIPTION                                                                            
+------------ ---------------                                                                        
+         104 baseball gloves                                                                        
+         104 tennis ball                                                                            
+         104 tennis balls                                                                           
+         104 tennis racquet                                                                         
+         104 volleyball                                                                             
+         104 volleyball net                                                                         
+         106 baseball                                                                               
+         106 baseball bat                                                                           
+         106 baseball gloves                                                                        
+         106 football                                                                               
+
+10 rows selected.
+
+SQL> 
+SQL> -- Problem #9
+SQL> SELECT COUNT (DISTINCT CUSTOMER_NUM) as Total_Customers_with_Orders
+  2   FROM ORDERS;
+
+TOTAL_CUSTOMERS_WITH_ORDERS                                                                         
+---------------------------                                                                         
+                          9                                                                         
+
+SQL> 
+SQL> -- Problem #10
+SQL> SELECT ORDERS.CUSTOMER_NUM, COUNT(DISTINCT ORDERS.ORDER_NUM) as NUMBER_OF_ORDERS, SUM(ITEMS.QUANTITY) as TOTAL_QUANTITY_OF_ITEMS, SUM(ITEMS.TOTAL_PRICE) as TOTAL_PRICE
+  2   FROM ORDERS, ITEMS
+  3   WHERE ORDERS.ORDER_NUM = ITEMS.ORDER_NUM
+  4   GROUP BY CUSTOMER_NUM
+  5  ORDER BY ORDERS.CUSTOMER_NUM;
+
+CUSTOMER_NUM NUMBER_OF_ORDERS TOTAL_QUANTITY_OF_ITEMS TOTAL_PRICE                                   
+------------ ---------------- ----------------------- -----------                                   
+         101                1                       2        1200                                   
+         104                4                      18      1451.8                                   
+         106                2                       6        3566                                   
+         110                2                       7        1390                                   
+         111                1                       1         450                                   
+         112                1                      17         498                                   
+         115                1                       2          84                                   
+         116                1                      22         562                                   
+         117                2                      16        2736                                   
+
+9 rows selected.
+
+SQL> spool off

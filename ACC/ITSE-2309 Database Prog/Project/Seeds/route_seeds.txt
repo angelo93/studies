@@ -1,0 +1,31 @@
+---------- Routes Originating from Austin, TX ----------
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('110', '025', '380');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('285', '025', '052');
+
+--------- Routes Originating from Houston, TX ----------
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('181', '052', '520');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('359', '052', '025');
+
+---------- Routes Originating from Memphis, TN ----------
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('887', '380', '520');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('899', '380', '025');
+
+---------- Routes Originating from Chicago, IL ----------
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('330', '520', '052');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('950', '520', '380');

@@ -1,0 +1,151 @@
+SQL> -- input code
+SQL> @ D:\1.table_scripts.txt
+SQL> -- Michael Navarro
+SQL> -- Final Project
+SQL> 
+SQL> CREATE TABLE City
+  2  (City_Code CHAR(3) Constraint City_pk PRIMARY KEY,
+  3  City_Name VARCHAR2(50) NOT NULL,
+  4  State_Code CHAR(2) NOT NULL
+  5  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE Customer
+  2  (Cust_Nbr CHAR(5) Constraint Customer_pk PRIMARY KEY,
+  3  Cust_Name VARCHAR2(50) NOT NULL
+  4  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE Model_Specs
+  2  (Model_Nbr VARCHAR(5) Constraint Model_Specs_pk PRIMARY KEY,
+  3  Description VARCHAR(50),
+  4  Capacity NUMBER(3) NOT NULL,
+  5  Range NUMBER(4) NOT NULL
+  6  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE Airport
+  2  (Airport_Code CHAR(3) Constraint Airport_pk PRIMARY KEY,
+  3  City_Code CHAR(3) NOT NULL,
+  4  Airport_Name VARCHAR2(50) NOT NULL,
+  5  Constraint Airport_City_Code_fk FOREIGN KEY(City_Code) REFERENCES City(City_Code)
+  6  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE Route
+  2  (Flight_Nbr CHAR(3) Constraint Route_pk PRIMARY KEY,
+  3  DP_ARPT_Code CHAR(3) NOT NULL,
+  4  AR_ARPT_Code CHAR(3) NOT NULL,
+  5  Constraint Route_DP_ARPT_Code_fk FOREIGN KEY(DP_ARPT_Code) REFERENCES Airport(Airport_Code),
+  6  Constraint Route_AR_ARPT_Code_fk FOREIGN KEY(AR_ARPT_Code) REFERENCES Airport(Airport_Code)
+  7  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE Aircraft
+  2  (Serial_Nbr CHAR(8) Constraint Aircraft_pk PRIMARY KEY,
+  3  Model_Nbr VARCHAR2(5) NOT NULL,
+  4  Constraint Aircraft_Model_Nbr_fk FOREIGN KEY(Model_Nbr) REFERENCES Model_Specs(Model_Nbr)
+  5  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE Flt_Sch
+  2  (Flight_Nbr CHAR(3),
+  3  Flight_Date DATE,
+  4  Serial_Nbr CHAR(8),
+  5  TOD VARCHAR2(4),
+  6  TOA VARCHAR2(4),
+  7  Constraint Flt_Sch_pk PRIMARY KEY(Flight_Nbr, Flight_Date),
+  8  Constraint Flt_Sch_Flight_Nbr_fk FOREIGN KEY(Flight_Nbr) REFERENCES Route(Flight_Nbr),
+  9  Constraint Flt_Sch_Serial_Nbr_fk FOREIGN KEY(Serial_Nbr) REFERENCES Aircraft(Serial_Nbr)
+ 10  );
+
+Table created.
+
+SQL> 
+SQL> CREATE TABLE RSVN
+  2  (Cust_Nbr CHAR(5),
+  3  Flight_Nbr CHAR(3),
+  4  Flight_Date DATE,
+  5  Constraint RSVN_pk PRIMARY KEY(Cust_Nbr, Flight_Nbr, Flight_Date),
+  6  Constraint RSVN_Cust_Nbr_fk FOREIGN KEY(Cust_Nbr) REFERENCES Customer(Cust_Nbr),
+  7  Constraint RSVN_Flight_Nbr_Flight_Date_fk FOREIGN KEY(Flight_Nbr, Flight_Date) REFERENCES Flt_Sch(Flight_Nbr, Flight_Date)
+  8  );
+
+Table created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> DESCRIBE CITY;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ CITY_CODE                                             NOT NULL CHAR(3)
+ CITY_NAME                                             NOT NULL VARCHAR2(50)
+ STATE_CODE                                            NOT NULL CHAR(2)
+
+SQL> DESCRIBE CUSTOMER;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ CUST_NBR                                              NOT NULL CHAR(5)
+ CUST_NAME                                             NOT NULL VARCHAR2(50)
+
+SQL> DESCRIBE MODEL_SPECS;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ MODEL_NBR                                             NOT NULL VARCHAR2(5)
+ DESCRIPTION                                                    VARCHAR2(50)
+ CAPACITY                                              NOT NULL NUMBER(3)
+ RANGE                                                 NOT NULL NUMBER(4)
+
+SQL> DESCRIBE AIRPORT;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ AIRPORT_CODE                                          NOT NULL CHAR(3)
+ CITY_CODE                                             NOT NULL CHAR(3)
+ AIRPORT_NAME                                          NOT NULL VARCHAR2(50)
+
+SQL> DESCRIBE ROUTE;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ FLIGHT_NBR                                            NOT NULL CHAR(3)
+ DP_ARPT_CODE                                          NOT NULL CHAR(3)
+ AR_ARPT_CODE                                          NOT NULL CHAR(3)
+
+SQL> DESCRIBE AIRCRAFT;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ SERIAL_NBR                                            NOT NULL CHAR(8)
+ MODEL_NBR                                             NOT NULL VARCHAR2(5)
+
+SQL> DESCRIBE FLT_SCH;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ FLIGHT_NBR                                            NOT NULL CHAR(3)
+ FLIGHT_DATE                                           NOT NULL DATE
+ SERIAL_NBR                                                     CHAR(8)
+ TOD                                                            VARCHAR2(4)
+ TOA                                                            VARCHAR2(4)
+
+SQL> DESCRIBE RSVN;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ CUST_NBR                                              NOT NULL CHAR(5)
+ FLIGHT_NBR                                            NOT NULL CHAR(3)
+ FLIGHT_DATE                                           NOT NULL DATE
+
+SQL> spool off

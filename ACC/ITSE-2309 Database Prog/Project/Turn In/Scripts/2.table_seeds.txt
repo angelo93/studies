@@ -1,0 +1,248 @@
+-- Michael Navarro
+-- Final Project
+
+---------- INSERTING CITY INFO ----------
+
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('025', 'Austin', 'TX');
+
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('052', 'Houston', 'TX');
+
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('520', 'Chicago', 'IL');
+
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('380', 'Memphis', 'TN');
+
+COMMIT;
+
+---------- INSERTING CUSTOMER INFO ----------
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1001', 'Ford');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1004', 'Pfeiffer');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1055', 'Harris');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1058', 'Codd');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1077', 'Nelson');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1080', 'Cassatt');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1100', 'Streep');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1155', 'Lechowick');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1158', 'Hilbert');
+
+COMMIT;
+
+---------- INSERTING MODEL INFO ----------
+
+INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+ VALUES ('BO727', '5-Seat, 2-Engine Jet', '110', '1800');
+
+INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+ VALUES ('BO737', '6-Seat, 2-Engine Jet', '174', '2500');
+ 
+INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+ VALUES ('BO747', '10-Seat, 4-Engine Jet', '300', '3500');
+
+INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+ VALUES ('DC9', '6-Seat, Prop w/Jet', '168', '2800');
+
+COMMIT;
+
+---------- INSERTING AIRPORT INFO ----------
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('AUS', '025', 'Austin Municpl. Airport');
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('HOU', '052', 'Houston Internat. Airport');
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('MEM', '380', 'Memphis Internat. Airport');
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('ORD', '520', 'Chicago Internat. Airport');
+
+COMMIT;
+
+---------- INSERTING ROUTE INFO ----------
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('110', 'AUS', 'MEM');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('285', 'AUS', 'HOU');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('181', 'HOU', 'ORD');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('359', 'HOU', 'AUS');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('887', 'MEM', 'ORD');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('899', 'MEM', 'AUS');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('333', 'ORD', 'HOU');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('950', 'ORD', 'MEM');
+
+COMMIT;
+
+---------- INSERTING AIRCRAFT INFO ----------
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T100-001', 'BO727');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T300-009', 'BO727');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T100-007', 'BO737');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T300-005', 'BO737');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T200-002', 'BO747');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T100-004', 'DC9');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T200-004', 'DC9');
+
+COMMIT;
+
+---------- INSERTING FLIGHT INFO ----------
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('110', '12-JUL-2020', 'T100-001', '0800', '0935');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('181', '12-JUL-2020', 'T200-002', '0830', '1130');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('285', '12-JUL-2020', 'T100-007', '0800', '0845');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('333', '12-JUL-2020', 'T200-002', '1700', '2000');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('887', '12-JUL-2020', 'T200-004', '2130', '2215');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('899', '12-JUL-2020', 'T300-009', '1045', '1215');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('110', '13-JUL-2020', 'T100-001', '0800', '0935');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('181', '13-JUL-2020', 'T200-002', '0830', '1130');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('285', '13-JUL-2020', 'T300-005', '0800', '0845');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('333', '13-JUL-2020', 'T200-002', '1700', '2000');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('359', '13-JUL-2020', 'T300-005', '2130', '2215');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, TOD, TOA)
+ VALUES ('887', '13-JUL-2020', '1045', '1215');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('899', '13-JUL-2020', 'T100-001', '1400', '1545');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('950', '13-JUL-2020', 'T100-007', '1300', '1500');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('110', '14-JUL-2020', 'T100-001', '0800', '0935');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('285', '14-JUL-2020', 'T300-005', '0800', '0845');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, TOD, TOA)
+ VALUES ('359', '14-JUL-2020', '2130', '2215');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('899', '14-JUL-2020', 'T300-009', '1400', '1545');
+
+COMMIT;
+
+---------- INSERTING RESERVATION INFO ----------
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1001', '181', '13-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1004', '110', '12-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1004', '899', '14-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1055', '359', '13-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1058', '950', '13-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1058', '899', '14-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1077', '110', '12-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1080', '333', '13-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1100', '359', '13-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1155', '359', '13-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1158', '110', '12-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1158', '899', '13-JUL-2020');
+
+COMMIT;
+
+SELECT *
+  FROM City;
+SELECT *
+  FROM CUSTOMER;
+SELECT *
+  FROM MODEL_SPECS;
+SELECT *
+  FROM AIRPORT;
+SELECT *
+  FROM ROUTE;
+SELECT *
+  FROM AIRCRAFT;
+SELECT *
+  FROM FLT_SCH;
+SELECT *
+  FROM RSVN;

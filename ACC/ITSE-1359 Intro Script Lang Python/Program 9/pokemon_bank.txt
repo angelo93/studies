@@ -1,0 +1,6 @@
+Name of Pokemon #1: Charmander
+Ability of Pokemon #1: Blaze
+Name of Pokemon #2: Wortortle
+Ability of Pokemon #2: Torrent
+Name of Pokemon #3: Pichu
+Ability of Pokemon #3: Lightning Rod

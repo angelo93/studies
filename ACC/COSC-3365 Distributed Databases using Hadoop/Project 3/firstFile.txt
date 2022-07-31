@@ -1,0 +1,2 @@
+Hello, my name is Michael Navarro
+This is my first exercise in Hadoop HDFS.

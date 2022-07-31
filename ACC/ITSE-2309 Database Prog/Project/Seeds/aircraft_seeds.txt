@@ -1,0 +1,28 @@
+---------- BO727 Aircrafts ----------
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T100-001', 'BO727');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T300-009', 'BO727');
+
+---------- BO737 Aircrafts ----------
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T100-007', 'BO737');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T300-005', 'BO737');
+
+---------- BO747 Aircrafts ----------
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T200-002', 'BO747');
+
+---------- DC9 Aircrafts ----------
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T100-004', 'DC9');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T200-004', 'DC9');

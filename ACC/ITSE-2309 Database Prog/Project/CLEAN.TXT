@@ -1,0 +1,27 @@
+DROP VIEW REPORT1;
+DROP VIEW REPORT4;
+DROP VIEW REPORT6;
+DROP VIEW PERMUTATIONS;
+DROP VIEW FLYING;
+DROP VIEW GROUNDED;
+DROP VIEW DEPARTURES;
+DROP VIEW ARRIVALS;
+
+drop TABLE "AIRPORT"
+cascade constraints;
+drop TABLE "AIRCRAFT"
+cascade constraints;
+drop TABLE "CITY"
+cascade constraints;
+drop TABLE "CUSTOMER"
+cascade constraints;
+drop TABLE "MODEL_SPECS"
+cascade constraints;
+drop TABLE "ROUTE"
+cascade constraints;
+drop TABLE "RSVN"
+cascade constraints;
+drop TABLE "FLT_SCH"
+cascade constraints;
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-YYYY';

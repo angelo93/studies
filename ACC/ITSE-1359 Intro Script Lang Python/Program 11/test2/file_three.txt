@@ -1,0 +1,3 @@
+Line 1 from file_two correct_text followed by Line 1 from the clipboard.
+Line 2 from file_two correct_text followed by Line 2 from the clipboard.
+Line 3 from file_two correct_text followed by Line 3 from the clipboard.

@@ -1,0 +1,17 @@
+---------- Cities in Texas ----------
+
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('025', 'Austin', 'TX');
+
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('052', 'Houston', 'TX');
+
+---------- Cities in Illinois ----------
+
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('520', 'Chicago', 'IL');
+
+---------- Cities in Tennesse ----------
+
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('380', 'Memphis', 'TN');

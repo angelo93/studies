@@ -1,0 +1,35 @@
+INSERT INTO RSVN (Customer_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1001', '181', '13-JUL-2020');
+
+INSERT INTO RSVN (Customer_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1004', '110', '12-JUL-2020');
+
+INSERT INTO RSVN (Customer_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1004', '899', '14-JUL-2020');
+
+INSERT INTO RSVN (Customer_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1055', '359', '13-JUL-2020');
+
+INSERT INTO RSVN (Customer_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1058', '950', '13-JUL-2020');
+
+INSERT INTO RSVN (Customer_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1058', '899', '14-JUL-2020');
+
+INSERT INTO RSVN (Customer_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1077', '110', '12-JUL-2020');
+
+INSERT INTO RSVN (Customer_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1080', '333', '13-JUL-2020');
+
+INSERT INTO RSVN (Customer_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1100', '359', '13-JUL-2020');
+
+INSERT INTO RSVN (Customer_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1155', '359', '13-JUL-2020');
+
+INSERT INTO RSVN (Customer_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1158', '110', '12-JUL-2020');
+
+INSERT INTO RSVN (Customer_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1158', '899', '13-JUL-2020');

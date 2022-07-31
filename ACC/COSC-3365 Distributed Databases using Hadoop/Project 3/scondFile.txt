@@ -1,0 +1,1 @@
+I am enjoying this Hadoop HDFS exercise so far.

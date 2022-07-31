@@ -1,0 +1,15 @@
+---------- BO Models ----------
+
+INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+ VALUES ('BO727', '5-Seat, 2-Engine Jet', '110', '1800');
+
+INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+ VALUES ('BO737', '6-Seat, 2-Engine Jet', '174', '2500');
+ 
+INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+ VALUES ('BO747', '10-Seat, 4-Engine Jet', '300', '3500');
+
+---------- DC Models ----------
+
+INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+ VALUES ('DC9', '6-Seat, Prop w/Jet', '168', '2800');

@@ -1,0 +1,87 @@
+CLEAR BREAKS;
+CLEAR COLUMNS;
+CLEAR COMPUTES;
+TTITLE OFF;
+
+-- Query 1
+SELECT Aircraft.Serial_Nbr, Model_Specs.Model_Nbr, Model_Specs.Description, Model_Specs.Capacity, Model_Specs.Range
+  FROM Aircraft
+       LEFT JOIN Model_Specs ON Aircraft.Model_Nbr = Model_Specs.Model_Nbr
+  WHERE Model_Specs.Capacity >= 150
+    AND Model_Specs.Range > 2400;
+
+-- Query 4
+CREATE VIEW Permutations(Flt_Date, Serial) AS
+SELECT DISTINCT Flt_Sch.Flight_Date,
+                Aircraft.Serial_Nbr
+  FROM Flt_Sch,
+       Aircraft;
+
+CREATE VIEW Flying(Flt_Date, Serial) AS
+SELECT Flt_Sch.Flight_Date,
+       Flt_Sch.Serial_Nbr
+  FROM Flt_Sch;
+
+CREATE VIEW Grounded(Flt_Date, Serial) AS
+SELECT * 
+  FROM Permutations 
+  WHERE NOT EXISTS (SELECT *
+                      FROM Flying
+                      WHERE Permutations.Flt_Date = Flying.Flt_Date
+                        AND Permutations.Serial = Flying.Serial);
+
+SELECT Flt_Date, Serial, Aircraft.Model_Nbr, Model_Specs.Description, Model_Specs.Capacity, Model_Specs.Range
+  FROM Grounded
+    LEFT JOIN Aircraft ON Grounded.Serial = aircraft.Serial_nbr
+    LEFT JOIN Model_Specs ON Aircraft.Model_Nbr = Model_Specs.Model_Nbr
+ORDER BY Flt_Date, Serial;
+
+-- Query 5
+CREATE VIEW Departures(Cust, Flt#, Flt_Date, DP_Apt, DP_City, TOD) AS
+SELECT RSVN.Cust_Nbr,
+       RSVN.Flight_Nbr,
+       RSVN.Flight_Date,
+       Airport.Airport_Name DP_Airport,
+       City.City_Name DP_City,
+       Flt_Sch.TOD
+  FROM RSVN
+    LEFT JOIN Route ON RSVN.Flight_Nbr = Route.Flight_Nbr
+    LEFT JOIN Airport ON Route.DP_ARPT_Code = Airport.Airport_Code
+    LEFT JOIN City ON Airport.City_Code = City.City_Code
+    LEFT JOIN Flt_Sch ON RSVN.Flight_Nbr = Flt_Sch.Flight_Nbr AND RSVN.Flight_Date = Flt_Sch.Flight_Date;
+
+CREATE VIEW Arrivals(Cust, Flt#, Flt_Date, AR_Apt, AR_City, TOA) AS
+SELECT RSVN.Cust_Nbr,
+       RSVN.Flight_Nbr,
+       RSVN.Flight_Date,
+       Airport.Airport_Name AR_Airport,
+       City.City_Name AR_City,
+       Flt_Sch.TOA
+  FROM RSVN
+    LEFT JOIN Route ON RSVN.Flight_Nbr = Route.Flight_Nbr
+    LEFT JOIN Airport ON Route.AR_ARPT_Code = Airport.Airport_Code
+    LEFT JOIN City ON Airport.City_Code = City.City_Code
+    LEFT JOIN Flt_Sch ON RSVN.Flight_Nbr = Flt_Sch.Flight_Nbr AND RSVN.Flight_Date = Flt_Sch.Flight_Date;
+
+COLUMN Cust HEADING 'Cust #' FORMAT A6
+COLUMN Flt# HEADING 'Flt|Nbr' FORMAT A5
+COLUMN Flt_Date HEADING 'Flt|Date' FORMAT A10
+COLUMN DP_APT FORMAT A17 WORD_WRAP
+COLUMN DP_City FORMAT A12
+COLUMN AR_APT FORMAT A17 WORD_WRAP
+COLUMN AR_City FORMAT A12
+
+Select Departures.Cust,
+       Departures.Flt#,
+       Departures.Flt_Date,
+       Departures.DP_APT,
+       Departures.DP_City,
+       Departures.TOD,
+       Arrivals.AR_Apt,
+       Arrivals.AR_City,
+       Arrivals.TOA
+  FROM Departures
+    LEFT JOIN Arrivals ON Departures.Cust = Arrivals.Cust
+      AND Departures.Flt# = Arrivals. Flt#
+      AND Departures.Flt_Date = Arrivals.Flt_Date
+ORDER BY Cust, Flt_Date;

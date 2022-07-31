@@ -1,0 +1,24 @@
+#lang racket
+;--------------------- Start Helper Functions ---------------------
+; Start testAccuracy
+(define (testAcc ans)
+  (if (= (abs(/ (floor(* 1000.0 ans)) 1000.0)) .001)
+      1
+      -1))
+; End testAccuracy
+
+; Start getAvg
+(define (getAvg a b)
+  (/ (+ a b) 2.0))
+; End getAvg
+
+;-------------------- Start oddRevList Function --------------------
+; Start oddRevList Function
+(define (oddRevList lst)
+  "yay"
+  )
+; End oddRevList Function
+
+;-------------------- Start Tests --------------------
+
+(define lstA '(1 2 3 4 5 6 7 8))

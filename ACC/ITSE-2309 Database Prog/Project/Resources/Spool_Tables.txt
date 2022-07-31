@@ -1,0 +1,9 @@
+-- code execution structure
+set pagesize 52
+set linesize 100
+set echo on
+-- output file
+spool D:\Table_Creation_Results.txt
+-- input code
+@ D:\1.table_scripts.txt
+spool off

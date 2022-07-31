@@ -1,0 +1,36 @@
+#lang racket
+(require racket/draw)
+
+(define (make-mandelbrot-bitmap #:width w #:height h #:filename filename)
+  (define bmp (make-bitmap w h))
+  (make-mandelbrot-dc #:bitmap bmp)
+  (send bmp save-file filename 'png))
+
+(define (make-mandelbrot-dc #:bitmap bmp #:z [z 0] #:i [i 30])
+  (define dc (new bitmap-dc% [bitmap bmp]))
+  (define w (send bmp get-width))
+  (define h (send bmp get-height))
+  (for* ([x (in-range 0 w)]
+         [y (in-range 0 h)])
+    (when (converges? (make-rectangular
+                       (x-pos->x-coord x w) (y-pos->y-coord y h)) z i)
+      (send dc set-pixel x y (make-color 100 100 100)))))
+
+(define (converges? c z i)
+  (cond
+    [(> (magnitude z) 2) #f]
+    [(zero? i) #t]
+    [else (converges? c (f z c) (sub1 i))]))
+
+(define (x-pos->x-coord x width)
+  (* (- x (/ width 2)) 0.001))
+
+(define (y-pos->y-coord y height)
+  (* (- y (/ height 2)) 0.001))
+
+(define (f z c) (+ (expt z 2) c))
+
+(make-mandelbrot-bitmap
+ #:width 4000
+ #:height 2000
+ #:filename "mandelbrot.png")

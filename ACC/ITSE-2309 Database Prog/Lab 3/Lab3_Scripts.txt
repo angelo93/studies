@@ -1,0 +1,118 @@
+-- Michael Navarro
+-- Lab 2 ITSE2309
+
+-- Problem #3
+CREATE TABLE Student
+(Student_ID CHAR(9) Constraint Student_pk PRIMARY KEY,
+Student_Name VARCHAR2(50) NOT NULL,
+Student_Address VARCHAR2(50),
+Student_Major VARCHAR2(4)
+);
+
+CREATE TABLE Instructor
+(Instructor_ID CHAR(3) Constraint Instructor_pk PRIMARY KEY,
+Instructor_Name VARCHAR2(50) NOT NULL,
+Instructor_Office CHAR(4)
+);
+
+CREATE TABLE Course
+(Course_ID CHAR(7) Constraint Course_pk PRIMARY KEY,
+Course_Title VARCHAR2(25),
+Instructor_ID CHAR(3),
+Constraint Course_Instructor_ID_fk FOREIGN KEY(Instructor_ID) REFERENCES Instructor(Instructor_ID)
+);
+
+CREATE TABLE Marks
+(Student_ID CHAR(9),
+Course_ID CHAR(7),
+Stu_Crse_Grade CHAR(1) Constraint Stu_Crse_Grade_ck CHECK (Stu_Crse_Grade IN ('A', 'B', 'C', 'D', 'F')),
+Constraint Marks_pk PRIMARY KEY(Student_ID, Course_ID),
+Constraint Marks_Student_ID_fk FOREIGN KEY(Student_ID) REFERENCES Student(Student_ID),
+Constraint Marks_Course_ID_fk FOREIGN KEY(Course_ID) REFERENCES Course(Course_ID)
+);
+
+DESCRIBE STUDENT;
+DESCRIBE INSTRUCTOR;
+DESCRIBE COURSE;
+DESCRIBE MARKS;
+
+-- Problem #4
+INSERT INTO Student (Student_ID, Student_Name, Student_Address, Student_Major)
+ VALUES ('268300458', 'Williams', '208 Brooks', 'CIS');
+
+INSERT INTO Student (Student_ID, Student_Name, Student_Address, Student_Major)
+ VALUES ('543291073', 'Baker', '104 Philips', 'Acct');
+
+INSERT INTO Student (Student_ID, Student_Name, Student_Address, Student_Major)
+ VALUES ('695381127', 'White', '208 Brooks', 'Math');
+
+COMMIT;
+
+INSERT INTO Instructor (Instructor_ID, Instructor_Name, Instructor_Office)
+ VALUES ('301', 'Codd', 'B104');
+
+INSERT INTO Instructor (Instructor_ID, Instructor_Name, Instructor_Office)
+ VALUES ('451', 'Parsons', 'B317');
+
+INSERT INTO Instructor (Instructor_ID, Instructor_Name, Instructor_Office)
+ VALUES ('255', 'Miller', 'H310');
+
+INSERT INTO Instructor (Instructor_ID, Instructor_Name, Instructor_Office)
+ VALUES ('518', 'Bennett', 'B212');
+
+INSERT INTO Instructor (Instructor_ID, Instructor_Name, Instructor_Office)
+ VALUES ('622', 'Hilbert', 'M301');
+
+COMMIT;
+
+INSERT INTO Course (Course_ID, Course_Title, Instructor_ID)
+ VALUES ('CIS 350', 'Database', '301');
+
+INSERT INTO Course (Course_ID, Course_Title, Instructor_ID)
+ VALUES ('CIS 465', 'Systems Anal', '451');
+
+INSERT INTO Course (Course_ID, Course_Title, Instructor_ID)
+ VALUES ('Acc 201', 'Fund of Acctg', '255');
+
+INSERT INTO Course (Course_ID, Course_Title, Instructor_ID)
+ VALUES ('Mkt 300', 'Into to Mktg', '518');
+
+INSERT INTO Course (Course_ID, Course_Title, Instructor_ID)
+ VALUES ('Mth 202', 'College algebra', '622');
+
+COMMIT;
+
+INSERT INTO Marks (Student_ID, Course_ID, Stu_Crse_Grade)
+ VALUES ('268300458', 'CIS 350', 'A');
+
+INSERT INTO Marks (Student_ID, Course_ID, Stu_Crse_Grade)
+ VALUES ('268300458', 'CIS 465', 'B');
+
+INSERT INTO Marks (Student_ID, Course_ID, Stu_Crse_Grade)
+ VALUES ('543291073', 'CIS 350', 'C');
+
+INSERT INTO Marks (Student_ID, Course_ID, Stu_Crse_Grade)
+ VALUES ('543291073', 'Acc 201', 'B');
+
+INSERT INTO Marks (Student_ID, Course_ID, Stu_Crse_Grade)
+ VALUES ('543291073', 'Mkt 300', 'A');
+
+INSERT INTO Marks (Student_ID, Course_ID, Stu_Crse_Grade)
+ VALUES ('695381127', 'Mth 202', 'B');
+
+INSERT INTO Marks (Student_ID, Course_ID, Stu_Crse_Grade)
+ VALUES ('695381127', 'Acc 201', 'A');
+
+COMMIT;
+
+SELECT *
+ FROM STUDENT;
+
+SELECT *
+ FROM INSTRUCTOR;
+
+SELECT *
+ FROM COURSE;
+
+SELECT *
+ FROM MARKS;

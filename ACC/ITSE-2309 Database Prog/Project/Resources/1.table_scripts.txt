@@ -1,0 +1,72 @@
+-- Michael Navarro
+-- Final Project
+
+CREATE TABLE City
+(City_Code CHAR(3) Constraint City_pk PRIMARY KEY,
+City_Name VARCHAR2(50) NOT NULL,
+State_Code CHAR(2) NOT NULL
+);
+
+CREATE TABLE Customer
+(Cust_Nbr CHAR(5) Constraint Customer_pk PRIMARY KEY,
+Cust_Name VARCHAR2(50) NOT NULL
+);
+
+CREATE TABLE Model_Specs
+(Model_Nbr VARCHAR(5) Constraint Model_Specs_pk PRIMARY KEY,
+Description VARCHAR(50),
+Capacity NUMBER(3) NOT NULL,
+Range NUMBER(4) NOT NULL
+);
+
+CREATE TABLE Airport
+(Airport_Code CHAR(3) Constraint Airport_pk PRIMARY KEY,
+City_Code CHAR(3) NOT NULL,
+Airport_Name VARCHAR2(50) NOT NULL,
+Constraint Airport_City_Code_fk FOREIGN KEY(City_Code) REFERENCES City(City_Code)
+);
+
+CREATE TABLE Route
+(Flight_Nbr CHAR(3) Constraint Route_pk PRIMARY KEY,
+DP_ARPT_Code CHAR(3) NOT NULL,
+AR_ARPT_Code CHAR(3) NOT NULL,
+Constraint Route_DP_ARPT_Code_fk FOREIGN KEY(DP_ARPT_Code) REFERENCES Airport(Airport_Code),
+Constraint Route_AR_ARPT_Code_fk FOREIGN KEY(AR_ARPT_Code) REFERENCES Airport(Airport_Code)
+);
+
+CREATE TABLE Aircraft
+(Serial_Nbr CHAR(8) Constraint Aircraft_pk PRIMARY KEY,
+Model_Nbr VARCHAR2(5) NOT NULL,
+Constraint Aircraft_Model_Nbr_fk FOREIGN KEY(Model_Nbr) REFERENCES Model_Specs(Model_Nbr)
+);
+
+CREATE TABLE Flt_Sch
+(Flight_Nbr CHAR(3),
+Flight_Date DATE,
+Serial_Nbr CHAR(8),
+TOD VARCHAR2(4),
+TOA VARCHAR2(4),
+Constraint Flt_Sch_pk PRIMARY KEY(Flight_Nbr, Flight_Date),
+Constraint Flt_Sch_Flight_Nbr_fk FOREIGN KEY(Flight_Nbr) REFERENCES Route(Flight_Nbr),
+Constraint Flt_Sch_Serial_Nbr_fk FOREIGN KEY(Serial_Nbr) REFERENCES Aircraft(Serial_Nbr)
+);
+
+CREATE TABLE RSVN
+(Cust_Nbr CHAR(5),
+Flight_Nbr CHAR(3),
+Flight_Date DATE,
+Constraint RSVN_pk PRIMARY KEY(Cust_Nbr, Flight_Nbr, Flight_Date),
+Constraint RSVN_Cust_Nbr_fk FOREIGN KEY(Cust_Nbr) REFERENCES Customer(Cust_Nbr),
+Constraint RSVN_Flight_Nbr_Flight_Date_fk FOREIGN KEY(Flight_Nbr, Flight_Date) REFERENCES Flt_Sch(Flight_Nbr, Flight_Date)
+);
+
+COMMIT;
+
+DESCRIBE CITY;
+DESCRIBE CUSTOMER;
+DESCRIBE MODEL_SPECS;
+DESCRIBE AIRPORT;
+DESCRIBE ROUTE;
+DESCRIBE AIRCRAFT;
+DESCRIBE FLT_SCH;
+DESCRIBE RSVN;

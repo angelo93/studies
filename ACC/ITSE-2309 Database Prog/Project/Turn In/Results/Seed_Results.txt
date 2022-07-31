@@ -1,0 +1,581 @@
+SQL> -- input code
+SQL> @ D:\2.table_seeds.txt
+SQL> -- Michael Navarro
+SQL> -- Final Project
+SQL> 
+SQL> ---------- INSERTING CITY INFO ----------
+SQL> 
+SQL> INSERT INTO City (City_Code, City_Name, State_Code)
+  2   VALUES ('025', 'Austin', 'TX');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO City (City_Code, City_Name, State_Code)
+  2   VALUES ('052', 'Houston', 'TX');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO City (City_Code, City_Name, State_Code)
+  2   VALUES ('520', 'Chicago', 'IL');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO City (City_Code, City_Name, State_Code)
+  2   VALUES ('380', 'Memphis', 'TN');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> ---------- INSERTING CUSTOMER INFO ----------
+SQL> INSERT INTO Customer (Cust_Nbr, Cust_Name)
+  2   VALUES ('1001', 'Ford');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Customer (Cust_Nbr, Cust_Name)
+  2   VALUES ('1004', 'Pfeiffer');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Customer (Cust_Nbr, Cust_Name)
+  2   VALUES ('1055', 'Harris');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Customer (Cust_Nbr, Cust_Name)
+  2   VALUES ('1058', 'Codd');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Customer (Cust_Nbr, Cust_Name)
+  2   VALUES ('1077', 'Nelson');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Customer (Cust_Nbr, Cust_Name)
+  2   VALUES ('1080', 'Cassatt');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Customer (Cust_Nbr, Cust_Name)
+  2   VALUES ('1100', 'Streep');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Customer (Cust_Nbr, Cust_Name)
+  2   VALUES ('1155', 'Lechowick');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Customer (Cust_Nbr, Cust_Name)
+  2   VALUES ('1158', 'Hilbert');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> ---------- INSERTING MODEL INFO ----------
+SQL> 
+SQL> INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+  2   VALUES ('BO727', '5-Seat, 2-Engine Jet', '110', '1800');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+  2   VALUES ('BO737', '6-Seat, 2-Engine Jet', '174', '2500');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+  2   VALUES ('BO747', '10-Seat, 4-Engine Jet', '300', '3500');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+  2   VALUES ('DC9', '6-Seat, Prop w/Jet', '168', '2800');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> ---------- INSERTING AIRPORT INFO ----------
+SQL> 
+SQL> INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+  2   VALUES ('AUS', '025', 'Austin Municpl. Airport');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+  2   VALUES ('HOU', '052', 'Houston Internat. Airport');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+  2   VALUES ('MEM', '380', 'Memphis Internat. Airport');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+  2   VALUES ('ORD', '520', 'Chicago Internat. Airport');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> ---------- INSERTING ROUTE INFO ----------
+SQL> 
+SQL> INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+  2   VALUES ('110', 'AUS', 'MEM');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+  2   VALUES ('285', 'AUS', 'HOU');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+  2   VALUES ('181', 'HOU', 'ORD');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+  2   VALUES ('359', 'HOU', 'AUS');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+  2   VALUES ('887', 'MEM', 'ORD');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+  2   VALUES ('899', 'MEM', 'AUS');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+  2   VALUES ('333', 'ORD', 'HOU');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+  2   VALUES ('950', 'ORD', 'MEM');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> ---------- INSERTING AIRCRAFT INFO ----------
+SQL> 
+SQL> INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+  2   VALUES ('T100-001', 'BO727');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+  2   VALUES ('T300-009', 'BO727');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+  2   VALUES ('T100-007', 'BO737');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+  2   VALUES ('T300-005', 'BO737');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+  2   VALUES ('T200-002', 'BO747');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+  2   VALUES ('T100-004', 'DC9');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+  2   VALUES ('T200-004', 'DC9');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> ---------- INSERTING FLIGHT INFO ----------
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('110', '12-JUL-2020', 'T100-001', '0800', '0935');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('181', '12-JUL-2020', 'T200-002', '0830', '1130');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('285', '12-JUL-2020', 'T100-007', '0800', '0845');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('333', '12-JUL-2020', 'T200-002', '1700', '2000');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('887', '12-JUL-2020', 'T200-004', '2130', '2215');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('899', '12-JUL-2020', 'T300-009', '1045', '1215');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('110', '13-JUL-2020', 'T100-001', '0800', '0935');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('181', '13-JUL-2020', 'T200-002', '0830', '1130');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('285', '13-JUL-2020', 'T300-005', '0800', '0845');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('333', '13-JUL-2020', 'T200-002', '1700', '2000');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('359', '13-JUL-2020', 'T300-005', '2130', '2215');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, TOD, TOA)
+  2   VALUES ('887', '13-JUL-2020', '1045', '1215');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('899', '13-JUL-2020', 'T100-001', '1400', '1545');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('950', '13-JUL-2020', 'T100-007', '1300', '1500');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('110', '14-JUL-2020', 'T100-001', '0800', '0935');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('285', '14-JUL-2020', 'T300-005', '0800', '0845');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, TOD, TOA)
+  2   VALUES ('359', '14-JUL-2020', '2130', '2215');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+  2   VALUES ('899', '14-JUL-2020', 'T300-009', '1400', '1545');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> ---------- INSERTING RESERVATION INFO ----------
+SQL> 
+SQL> INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+  2   VALUES ('1001', '181', '13-JUL-2020');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+  2   VALUES ('1004', '110', '12-JUL-2020');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+  2   VALUES ('1004', '899', '14-JUL-2020');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+  2   VALUES ('1055', '359', '13-JUL-2020');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+  2   VALUES ('1058', '950', '13-JUL-2020');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+  2   VALUES ('1058', '899', '14-JUL-2020');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+  2   VALUES ('1077', '110', '12-JUL-2020');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+  2   VALUES ('1080', '333', '13-JUL-2020');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+  2   VALUES ('1100', '359', '13-JUL-2020');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+  2   VALUES ('1155', '359', '13-JUL-2020');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+  2   VALUES ('1158', '110', '12-JUL-2020');
+
+1 row created.
+
+SQL> 
+SQL> INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+  2   VALUES ('1158', '899', '13-JUL-2020');
+
+1 row created.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> SELECT *
+  2    FROM City;
+
+CIT CITY_NAME                                          ST                                           
+--- -------------------------------------------------- --                                           
+025 Austin                                             TX                                           
+052 Houston                                            TX                                           
+520 Chicago                                            IL                                           
+380 Memphis                                            TN                                           
+
+SQL> SELECT *
+  2    FROM CUSTOMER;
+
+CUST_ CUST_NAME                                                                                     
+----- --------------------------------------------------                                            
+1001  Ford                                                                                          
+1004  Pfeiffer                                                                                      
+1055  Harris                                                                                        
+1058  Codd                                                                                          
+1077  Nelson                                                                                        
+1080  Cassatt                                                                                       
+1100  Streep                                                                                        
+1155  Lechowick                                                                                     
+1158  Hilbert                                                                                       
+
+9 rows selected.
+
+SQL> SELECT *
+  2    FROM MODEL_SPECS;
+
+MODEL DESCRIPTION                                          CAPACITY      RANGE                      
+----- -------------------------------------------------- ---------- ----------                      
+BO727 5-Seat, 2-Engine Jet                                      110       1800                      
+BO737 6-Seat, 2-Engine Jet                                      174       2500                      
+BO747 10-Seat, 4-Engine Jet                                     300       3500                      
+DC9   6-Seat, Prop w/Jet                                        168       2800                      
+
+SQL> SELECT *
+  2    FROM AIRPORT;
+
+AIR CIT AIRPORT_NAME                                                                                
+--- --- --------------------------------------------------                                          
+AUS 025 Austin Municpl. Airport                                                                     
+HOU 052 Houston Internat. Airport                                                                   
+MEM 380 Memphis Internat. Airport                                                                   
+ORD 520 Chicago Internat. Airport                                                                   
+
+SQL> SELECT *
+  2    FROM ROUTE;
+
+FLI DP_ AR_                                                                                         
+--- --- ---                                                                                         
+110 AUS MEM                                                                                         
+285 AUS HOU                                                                                         
+181 HOU ORD                                                                                         
+359 HOU AUS                                                                                         
+887 MEM ORD                                                                                         
+899 MEM AUS                                                                                         
+333 ORD HOU                                                                                         
+950 ORD MEM                                                                                         
+
+8 rows selected.
+
+SQL> SELECT *
+  2    FROM AIRCRAFT;
+
+SERIAL_N MODEL                                                                                      
+-------- -----                                                                                      
+T100-001 BO727                                                                                      
+T300-009 BO727                                                                                      
+T100-007 BO737                                                                                      
+T300-005 BO737                                                                                      
+T200-002 BO747                                                                                      
+T100-004 DC9                                                                                        
+T200-004 DC9                                                                                        
+
+7 rows selected.
+
+SQL> SELECT *
+  2    FROM FLT_SCH;
+
+FLI FLIGHT_DATE SERIAL_N TOD  TOA                                                                   
+--- ----------- -------- ---- ----                                                                  
+110 12-JUL-2020 T100-001 0800 0935                                                                  
+181 12-JUL-2020 T200-002 0830 1130                                                                  
+285 12-JUL-2020 T100-007 0800 0845                                                                  
+333 12-JUL-2020 T200-002 1700 2000                                                                  
+887 12-JUL-2020 T200-004 2130 2215                                                                  
+899 12-JUL-2020 T300-009 1045 1215                                                                  
+110 13-JUL-2020 T100-001 0800 0935                                                                  
+181 13-JUL-2020 T200-002 0830 1130                                                                  
+285 13-JUL-2020 T300-005 0800 0845                                                                  
+333 13-JUL-2020 T200-002 1700 2000                                                                  
+359 13-JUL-2020 T300-005 2130 2215                                                                  
+887 13-JUL-2020          1045 1215                                                                  
+899 13-JUL-2020 T100-001 1400 1545                                                                  
+950 13-JUL-2020 T100-007 1300 1500                                                                  
+110 14-JUL-2020 T100-001 0800 0935                                                                  
+285 14-JUL-2020 T300-005 0800 0845                                                                  
+359 14-JUL-2020          2130 2215                                                                  
+899 14-JUL-2020 T300-009 1400 1545                                                                  
+
+18 rows selected.
+
+SQL> SELECT *
+  2    FROM RSVN;
+
+CUST_ FLI FLIGHT_DATE                                                                               
+----- --- -----------                                                                               
+1001  181 13-JUL-2020                                                                               
+1004  110 12-JUL-2020                                                                               
+1004  899 14-JUL-2020                                                                               
+1055  359 13-JUL-2020                                                                               
+1058  899 14-JUL-2020                                                                               
+1058  950 13-JUL-2020                                                                               
+1077  110 12-JUL-2020                                                                               
+1080  333 13-JUL-2020                                                                               
+1100  359 13-JUL-2020                                                                               
+1155  359 13-JUL-2020                                                                               
+1158  110 12-JUL-2020                                                                               
+1158  899 13-JUL-2020                                                                               
+
+12 rows selected.
+
+SQL> spool off

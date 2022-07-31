@@ -1,0 +1,557 @@
+-- Michael Navarro
+-- Final Project
+
+CREATE TABLE City
+(City_Code CHAR(3) Constraint City_pk PRIMARY KEY,
+City_Name VARCHAR2(50) NOT NULL,
+State_Code CHAR(2) NOT NULL
+);
+
+CREATE TABLE Customer
+(Cust_Nbr CHAR(5) Constraint Customer_pk PRIMARY KEY,
+Cust_Name VARCHAR2(50) NOT NULL
+);
+
+CREATE TABLE Model_Specs
+(Model_Nbr VARCHAR(5) Constraint Model_Specs_pk PRIMARY KEY,
+Description VARCHAR(50),
+Capacity NUMBER(3) NOT NULL,
+Range NUMBER(4) NOT NULL
+);
+
+CREATE TABLE Airport
+(Airport_Code CHAR(3) Constraint Airport_pk PRIMARY KEY,
+City_Code CHAR(3) NOT NULL,
+Airport_Name VARCHAR2(50) NOT NULL,
+Constraint Airport_City_Code_fk FOREIGN KEY(City_Code) REFERENCES City(City_Code)
+);
+
+CREATE TABLE Route
+(Flight_Nbr CHAR(3) Constraint Route_pk PRIMARY KEY,
+DP_ARPT_Code CHAR(3) NOT NULL,
+AR_ARPT_Code CHAR(3) NOT NULL,
+Constraint Route_DP_ARPT_Code_fk FOREIGN KEY(DP_ARPT_Code) REFERENCES Airport(Airport_Code),
+Constraint Route_AR_ARPT_Code_fk FOREIGN KEY(AR_ARPT_Code) REFERENCES Airport(Airport_Code)
+);
+
+CREATE TABLE Aircraft
+(Serial_Nbr CHAR(8) Constraint Aircraft_pk PRIMARY KEY,
+Model_Nbr VARCHAR2(5) NOT NULL,
+Constraint Aircraft_Model_Nbr_fk FOREIGN KEY(Model_Nbr) REFERENCES Model_Specs(Model_Nbr)
+);
+
+CREATE TABLE Flt_Sch
+(Flight_Nbr CHAR(3),
+Flight_Date DATE,
+Serial_Nbr CHAR(8),
+TOD VARCHAR2(4),
+TOA VARCHAR2(4),
+Constraint Flt_Sch_pk PRIMARY KEY(Flight_Nbr, Flight_Date),
+Constraint Flt_Sch_Flight_Nbr_fk FOREIGN KEY(Flight_Nbr) REFERENCES Route(Flight_Nbr),
+Constraint Flt_Sch_Serial_Nbr_fk FOREIGN KEY(Serial_Nbr) REFERENCES Aircraft(Serial_Nbr)
+);
+
+CREATE TABLE RSVN
+(Cust_Nbr CHAR(5),
+Flight_Nbr CHAR(3),
+Flight_Date DATE,
+Constraint RSVN_pk PRIMARY KEY(Cust_Nbr, Flight_Nbr, Flight_Date),
+Constraint RSVN_Cust_Nbr_fk FOREIGN KEY(Cust_Nbr) REFERENCES Customer(Cust_Nbr),
+Constraint RSVN_Flight_Nbr_Flight_Date_fk FOREIGN KEY(Flight_Nbr, Flight_Date) REFERENCES Flt_Sch(Flight_Nbr, Flight_Date)
+);
+
+COMMIT;
+
+DESCRIBE CITY;
+DESCRIBE CUSTOMER;
+DESCRIBE MODEL_SPECS;
+DESCRIBE AIRPORT;
+DESCRIBE ROUTE;
+DESCRIBE AIRCRAFT;
+DESCRIBE FLT_SCH;
+DESCRIBE RSVN;
+
+---------- INSERTING CITY INFO ----------
+
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('025', 'Austin', 'TX');
+
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('052', 'Houston', 'TX');
+
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('520', 'Chicago', 'IL');
+
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('380', 'Memphis', 'TN');
+
+COMMIT;
+
+---------- INSERTING CUSTOMER INFO ----------
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1001', 'Ford');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1004', 'Pfeiffer');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1055', 'Harris');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1058', 'Codd');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1077', 'Nelson');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1080', 'Cassatt');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1100', 'Streep');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1155', 'Lechowick');
+
+INSERT INTO Customer (Cust_Nbr, Cust_Name)
+ VALUES ('1158', 'Hilbert');
+
+COMMIT;
+
+---------- INSERTING MODEL INFO ----------
+
+INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+ VALUES ('BO727', '5-Seat, 2-Engine Jet', '110', '1800');
+
+INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+ VALUES ('BO737', '6-Seat, 2-Engine Jet', '174', '2500');
+ 
+INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+ VALUES ('BO747', '10-Seat, 4-Engine Jet', '300', '3500');
+
+INSERT INTO Model_Specs (Model_Nbr, Description, Capacity, Range)
+ VALUES ('DC9', '6-Seat, Prop w/Jet', '168', '2800');
+
+COMMIT;
+
+---------- INSERTING AIRPORT INFO ----------
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('AUS', '025', 'Austin Municpl. Airport');
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('HOU', '052', 'Houston Internat. Airport');
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('MEM', '380', 'Memphis Internat. Airport');
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('ORD', '520', 'Chicago Internat. Airport');
+
+COMMIT;
+
+---------- INSERTING ROUTE INFO ----------
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('110', 'AUS', 'MEM');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('285', 'AUS', 'HOU');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('181', 'HOU', 'ORD');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('359', 'HOU', 'AUS');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('887', 'MEM', 'ORD');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('899', 'MEM', 'AUS');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('333', 'ORD', 'HOU');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('950', 'ORD', 'MEM');
+
+COMMIT;
+
+---------- INSERTING AIRCRAFT INFO ----------
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T100-001', 'BO727');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T300-009', 'BO727');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T100-007', 'BO737');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T300-005', 'BO737');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T200-002', 'BO747');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T100-004', 'DC9');
+
+INSERT INTO Aircraft (Serial_Nbr, Model_Nbr)
+ VALUES ('T200-004', 'DC9');
+
+COMMIT;
+
+---------- INSERTING FLIGHT INFO ----------
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('110', '12-JUL-2020', 'T100-001', '0800', '0935');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('181', '12-JUL-2020', 'T200-002', '0830', '1130');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('285', '12-JUL-2020', 'T100-007', '0800', '0845');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('333', '12-JUL-2020', 'T200-002', '1700', '2000');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('887', '12-JUL-2020', 'T200-004', '2130', '2215');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('899', '12-JUL-2020', 'T300-009', '1045', '1215');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('110', '13-JUL-2020', 'T100-001', '0800', '0935');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('181', '13-JUL-2020', 'T200-002', '0830', '1130');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('285', '13-JUL-2020', 'T300-005', '0800', '0845');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('333', '13-JUL-2020', 'T200-002', '1700', '2000');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('359', '13-JUL-2020', 'T300-005', '2130', '2215');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, TOD, TOA)
+ VALUES ('887', '13-JUL-2020', '1045', '1215');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('899', '13-JUL-2020', 'T100-001', '1400', '1545');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('950', '13-JUL-2020', 'T100-007', '1300', '1500');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('110', '14-JUL-2020', 'T100-001', '0800', '0935');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('285', '14-JUL-2020', 'T300-005', '0800', '0845');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, TOD, TOA)
+ VALUES ('359', '14-JUL-2020', '2130', '2215');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('899', '14-JUL-2020', 'T300-009', '1400', '1545');
+
+COMMIT;
+
+---------- INSERTING RESERVATION INFO ----------
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1001', '181', '13-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1004', '110', '12-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1004', '899', '14-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1055', '359', '13-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1058', '950', '13-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1058', '899', '14-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1077', '110', '12-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1080', '333', '13-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1100', '359', '13-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1155', '359', '13-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1158', '110', '12-JUL-2020');
+
+INSERT INTO RSVN (Cust_Nbr, Flight_Nbr, Flight_Date)
+ VALUES ('1158', '899', '13-JUL-2020');
+
+COMMIT;
+
+SELECT *
+  FROM City;
+SELECT *
+  FROM CUSTOMER;
+SELECT *
+  FROM MODEL_SPECS;
+SELECT *
+  FROM AIRPORT;
+SELECT *
+  FROM ROUTE;
+SELECT *
+  FROM AIRCRAFT;
+SELECT *
+  FROM FLT_SCH;
+SELECT *
+  FROM RSVN;
+
+------------------------- REPORT 1 -------------------------
+
+CLEAR BREAKS;
+CLEAR COLUMNS;
+CLEAR COMPUTES;
+TTITLE OFF;
+
+CREATE VIEW REPORT1(Serial#, Type, Description, Capacity, Range) AS
+SELECT Aircraft.Serial_Nbr, Model_Specs.Model_Nbr, Model_Specs.Description, Model_Specs.Capacity, Model_Specs.Range
+  FROM Aircraft
+       LEFT JOIN Model_Specs ON Aircraft.Model_Nbr = Model_Specs.Model_Nbr;
+
+COLUMN DUMMY HEADING '' FORMAT A20
+COLUMN Description FORMAT A22
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'MM/DD/YY';
+
+TTITLE LEFT _DATE CENTER 'TERRA FIRMA AIRLINES' RIGHT 'PAGE:' SQL.PNO -
+SKIP 1 CENTER 'AIRCRAFT REPORT' SKIP 2  
+
+BREAK ON REPORT
+
+COMPUTE SUM LABEL 'Total Capacity:' AVG LABEL 'Average Capacity:' OF Capacity ON REPORT
+COMPUTE COUNT LABEL 'Number of Aircraft:' OF Serial# ON REPORT
+
+SELECT '  ' DUMMY, Serial#, Type, Description, Capacity, Range
+  FROM REPORT1
+  ORDER BY Serial#;
+
+------------------------- REPORT 4 -------------------------
+
+CLEAR BREAKS;
+CLEAR COLUMNS;
+CLEAR COMPUTES;
+TTITLE OFF;
+
+CREATE VIEW REPORT4(Flt_Date, Flt_Nbr, Serial_Nbr, Reserved, Available) AS
+SELECT Flt_Sch.Flight_Date,
+       Flt_Sch.Flight_Nbr,
+       Flt_Sch.Serial_Nbr,
+       COUNT(RSVN.Cust_Nbr),
+       (Model_Specs.Capacity-COUNT(RSVN.Cust_Nbr))
+  FROM Flt_Sch
+    LEFT JOIN Aircraft ON Flt_Sch.Serial_Nbr = Aircraft.Serial_Nbr
+    LEFT JOIN Model_Specs ON Aircraft.Model_Nbr = Model_Specs.Model_Nbr 
+    LEFT JOIN RSVN on Flt_Sch.Flight_Date = RSVN.Flight_Date
+      AND Flt_Sch.Flight_Nbr = RSVN.Flight_Nbr
+GROUP BY Flt_Sch.Flight_Date, Flt_Sch.Flight_Nbr, Flt_Sch.Serial_Nbr, Model_Specs.Capacity
+ORDER BY Flt_Sch.Flight_Date, Flt_Sch.Flight_Nbr, Flt_Sch.Serial_Nbr;
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'MM/DD/YYYY';
+
+COLUMN Flt_Date HEADING 'Flt|Date' FORMAT A15
+COLUMN Flt_Nbr HEADING 'Flt|Nbr' FORMAT A5
+COLUMN Serial_Nbr HEADING 'Aircraft|Serial #' FORMAT A12
+COLUMN Reserved HEADING '# Seats|Reserved' FORMAT 99999
+COLUMN Available HEADING '# Seats|Available' FORMAT 99999
+
+TTITLE LEFT _DATE CENTER 'TERRA FIRMA AIRLINES' RIGHT 'PAGE:' SQL.PNO -
+SKIP 1 CENTER 'SCHEDULED FLIGHT SUMMARY' SKIP 2 
+
+BREAK ON Flt_Date SKIP 1
+
+COMPUTE COUNT LABEL 'Total Flights:' -
+SUM LABEL 'Seats Reserved:' OF Reserved ON Flt_Date
+
+SELECT *
+  FROM REPORT4;
+
+------------------------- REPORT 6 -------------------------
+
+CLEAR BREAKS;
+CLEAR COLUMNS;
+CLEAR COMPUTES;
+TTITLE OFF;
+
+CREATE VIEW REPORT6(Flight_Nbr, Flight_Date, Cust_Nbr) AS
+SELECT Flight_Nbr,
+       Flight_Date,
+       Cust_Nbr
+  FROM RSVN
+ORDER BY Flight_Nbr, Flight_Date;
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'MM/DD/YYYY';
+
+COLUMN Flight_Nbr HEADING 'Flight|Nbr' FORMAT A7
+COLUMN Flight_Date HEADING 'Flight|Date' FORMAT A11
+COLUMN Cust_Nbr HEADING 'Cust|Nbr'
+
+TTITLE LEFT _DATE CENTER 'TERRA FIRMA AIRLINES' RIGHT 'PAGE:' SQL.PNO -
+SKIP 1 CENTER 'FLIGHT RESERVATION SUMMARY' SKIP 2 
+
+BREAK ON Flight_Nbr ON Flight_Date
+
+SELECT *
+  FROM REPORT6;
+
+------------------------- SESSION RESET -------------------------
+
+CLEAR BREAKS;
+CLEAR COLUMNS;
+CLEAR COMPUTES;
+TTITLE OFF;
+
+------------------------- QUERY 1 -------------------------
+
+SELECT Aircraft.Serial_Nbr, Model_Specs.Model_Nbr, Model_Specs.Description, Model_Specs.Capacity, Model_Specs.Range
+  FROM Aircraft
+       LEFT JOIN Model_Specs ON Aircraft.Model_Nbr = Model_Specs.Model_Nbr
+  WHERE Model_Specs.Capacity >= 150
+    AND Model_Specs.Range > 2400;
+
+------------------------- QUERY 4 -------------------------
+
+CREATE VIEW Permutations(Flt_Date, Serial) AS
+SELECT DISTINCT Flt_Sch.Flight_Date,
+                Aircraft.Serial_Nbr
+  FROM Flt_Sch,
+       Aircraft;
+
+CREATE VIEW Flying(Flt_Date, Serial) AS
+SELECT Flt_Sch.Flight_Date,
+       Flt_Sch.Serial_Nbr
+  FROM Flt_Sch;
+
+CREATE VIEW Grounded(Flt_Date, Serial) AS
+SELECT * 
+  FROM Permutations 
+  WHERE NOT EXISTS (SELECT *
+                      FROM Flying
+                      WHERE Permutations.Flt_Date = Flying.Flt_Date
+                        AND Permutations.Serial = Flying.Serial);
+
+SELECT Flt_Date, Serial, Aircraft.Model_Nbr, Model_Specs.Description, Model_Specs.Capacity, Model_Specs.Range
+  FROM Grounded
+    LEFT JOIN Aircraft ON Grounded.Serial = aircraft.Serial_nbr
+    LEFT JOIN Model_Specs ON Aircraft.Model_Nbr = Model_Specs.Model_Nbr
+ORDER BY Flt_Date, Serial;
+
+------------------------- QUERY 5 -------------------------
+
+CREATE VIEW Departures(Cust, Flt#, Flt_Date, DP_Apt, DP_City, TOD) AS
+SELECT RSVN.Cust_Nbr,
+       RSVN.Flight_Nbr,
+       RSVN.Flight_Date,
+       Airport.Airport_Name DP_Airport,
+       City.City_Name DP_City,
+       Flt_Sch.TOD
+  FROM RSVN
+    LEFT JOIN Route ON RSVN.Flight_Nbr = Route.Flight_Nbr
+    LEFT JOIN Airport ON Route.DP_ARPT_Code = Airport.Airport_Code
+    LEFT JOIN City ON Airport.City_Code = City.City_Code
+    LEFT JOIN Flt_Sch ON RSVN.Flight_Nbr = Flt_Sch.Flight_Nbr AND RSVN.Flight_Date = Flt_Sch.Flight_Date;
+
+CREATE VIEW Arrivals(Cust, Flt#, Flt_Date, AR_Apt, AR_City, TOA) AS
+SELECT RSVN.Cust_Nbr,
+       RSVN.Flight_Nbr,
+       RSVN.Flight_Date,
+       Airport.Airport_Name AR_Airport,
+       City.City_Name AR_City,
+       Flt_Sch.TOA
+  FROM RSVN
+    LEFT JOIN Route ON RSVN.Flight_Nbr = Route.Flight_Nbr
+    LEFT JOIN Airport ON Route.AR_ARPT_Code = Airport.Airport_Code
+    LEFT JOIN City ON Airport.City_Code = City.City_Code
+    LEFT JOIN Flt_Sch ON RSVN.Flight_Nbr = Flt_Sch.Flight_Nbr AND RSVN.Flight_Date = Flt_Sch.Flight_Date;
+
+COLUMN Cust HEADING 'Cust #' FORMAT A6
+COLUMN Flt# HEADING 'Flt|Nbr' FORMAT A5
+COLUMN Flt_Date HEADING 'Flt|Date' FORMAT A10
+COLUMN DP_APT FORMAT A17 WORD_WRAP
+COLUMN DP_City FORMAT A12
+COLUMN AR_APT FORMAT A17 WORD_WRAP
+COLUMN AR_City FORMAT A12
+
+Select Departures.Cust,
+       Departures.Flt#,
+       Departures.Flt_Date,
+       Departures.DP_APT,
+       Departures.DP_City,
+       Departures.TOD,
+       Arrivals.AR_Apt,
+       Arrivals.AR_City,
+       Arrivals.TOA
+  FROM Departures
+    LEFT JOIN Arrivals ON Departures.Cust = Arrivals.Cust
+      AND Departures.Flt# = Arrivals. Flt#
+      AND Departures.Flt_Date = Arrivals.Flt_Date
+ORDER BY Cust, Flt_Date;
+
+------------------------- MODIFICATION 1 -------------------------
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-YYYY';
+
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('180', 'Kansas City', 'MO');
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('KCI', '180', 'Kansas City Internat. Airport');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('200', 'MEM', 'KCI');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('421', 'KCI', 'MEM');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('200', '02-DEC-2020', 'T300-009', 'TBD', 'TBD');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('421', '02-DEC-2020', 'T300-009', '1730', '1915');
+
+COMMIT;
+
+SELECT *
+  FROM City;
+SELECT *
+  FROM Airport;
+SELECT *
+  FROM Route;
+SELECT *
+  FROM Flt_Sch;
+
+------------------------- CLEAN UP -------------------------
+
+CLEAR BREAKS;
+CLEAR COLUMNS;
+CLEAR COMPUTES;
+TTITLE OFF;
+
+DROP VIEW REPORT1;
+DROP VIEW REPORT4;
+DROP VIEW REPORT6;
+DROP VIEW PERMUTATIONS;
+DROP VIEW FLYING;
+DROP VIEW GROUNDED;
+DROP VIEW DEPARTURES;
+DROP VIEW ARRIVALS;

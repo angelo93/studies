@@ -1,0 +1,241 @@
+-- Michael Navarro
+-- Final Project
+
+------------------------- REPORT 1 -------------------------
+
+CLEAR BREAKS;
+CLEAR COLUMNS;
+CLEAR COMPUTES;
+TTITLE OFF;
+
+CREATE VIEW REPORT1(Serial#, Type, Description, Capacity, Range) AS
+SELECT Aircraft.Serial_Nbr, Model_Specs.Model_Nbr, Model_Specs.Description, Model_Specs.Capacity, Model_Specs.Range
+  FROM Aircraft
+       LEFT JOIN Model_Specs ON Aircraft.Model_Nbr = Model_Specs.Model_Nbr;
+
+COLUMN DUMMY HEADING '' FORMAT A20
+COLUMN Description FORMAT A22
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'MM/DD/YY';
+
+TTITLE LEFT _DATE CENTER 'TERRA FIRMA AIRLINES' RIGHT 'PAGE:' SQL.PNO -
+SKIP 1 CENTER 'AIRCRAFT REPORT' SKIP 2  
+
+BREAK ON REPORT
+
+COMPUTE SUM LABEL 'Total Capacity:' AVG LABEL 'Average Capacity:' OF Capacity ON REPORT
+COMPUTE COUNT LABEL 'Number of Aircraft:' OF Serial# ON REPORT
+
+SELECT '  ' DUMMY, Serial#, Type, Description, Capacity, Range
+  FROM REPORT1
+  ORDER BY Serial#;
+
+------------------------- REPORT 4 -------------------------
+
+CLEAR BREAKS;
+CLEAR COLUMNS;
+CLEAR COMPUTES;
+TTITLE OFF;
+
+CREATE VIEW REPORT4(Flt_Date, Flt_Nbr, Serial_Nbr, Reserved, Available) AS
+SELECT Flt_Sch.Flight_Date,
+       Flt_Sch.Flight_Nbr,
+       Flt_Sch.Serial_Nbr,
+       COUNT(RSVN.Cust_Nbr),
+       (Model_Specs.Capacity-COUNT(RSVN.Cust_Nbr))
+  FROM Flt_Sch
+    LEFT JOIN Aircraft ON Flt_Sch.Serial_Nbr = Aircraft.Serial_Nbr
+    LEFT JOIN Model_Specs ON Aircraft.Model_Nbr = Model_Specs.Model_Nbr 
+    LEFT JOIN RSVN on Flt_Sch.Flight_Date = RSVN.Flight_Date
+      AND Flt_Sch.Flight_Nbr = RSVN.Flight_Nbr
+GROUP BY Flt_Sch.Flight_Date, Flt_Sch.Flight_Nbr, Flt_Sch.Serial_Nbr, Model_Specs.Capacity
+ORDER BY Flt_Sch.Flight_Date, Flt_Sch.Flight_Nbr, Flt_Sch.Serial_Nbr;
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'MM/DD';
+
+COLUMN Flt_Date HEADING 'Flt|Date' FORMAT A15
+COLUMN Flt_Nbr HEADING 'Flt|Nbr' FORMAT A5
+COLUMN Serial_Nbr HEADING 'Aircraft|Serial #' FORMAT A12
+COLUMN Reserved HEADING '# Seats|Reserved' FORMAT 99999
+COLUMN Available HEADING '# Seats|Available' FORMAT 99999
+
+TTITLE LEFT _DATE CENTER 'TERRA FIRMA AIRLINES' RIGHT 'PAGE:' SQL.PNO -
+SKIP 1 CENTER 'SCHEDULED FLIGHT SUMMARY' SKIP 2 
+
+BREAK ON Flt_Date SKIP 1
+
+COMPUTE COUNT LABEL 'Total Flights:' -
+SUM LABEL 'Seats Reserved:' OF Reserved ON Flt_Date
+
+SELECT *
+  FROM REPORT4;
+
+------------------------- REPORT 6 -------------------------
+
+CLEAR BREAKS;
+CLEAR COLUMNS;
+CLEAR COMPUTES;
+TTITLE OFF;
+
+CREATE VIEW REPORT6(Flight_Nbr, Flight_Date, Cust_Nbr) AS
+SELECT Flight_Nbr,
+       Flight_Date,
+       Cust_Nbr
+  FROM RSVN
+ORDER BY Flight_Nbr, Flight_Date;
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'MM/DD/YYYY';
+
+COLUMN Flight_Nbr HEADING 'Flight|Nbr' FORMAT A7
+COLUMN Flight_Date HEADING 'Flight|Date' FORMAT A11
+COLUMN Cust_Nbr HEADING 'Cust|Nbr'
+
+TTITLE LEFT _DATE CENTER 'TERRA FIRMA AIRLINES' RIGHT 'PAGE:' SQL.PNO -
+SKIP 1 CENTER 'FLIGHT RESERVATION SUMMARY' SKIP 2 
+
+BREAK ON Flight_Nbr ON Flight_Date
+
+SELECT *
+  FROM REPORT6;
+
+------------------------- SESSION RESET -------------------------
+
+CLEAR BREAKS;
+CLEAR COLUMNS;
+CLEAR COMPUTES;
+TTITLE OFF;
+
+------------------------- QUERY 1 -------------------------
+
+SELECT Aircraft.Serial_Nbr, Model_Specs.Model_Nbr, Model_Specs.Description, Model_Specs.Capacity, Model_Specs.Range
+  FROM Aircraft
+       LEFT JOIN Model_Specs ON Aircraft.Model_Nbr = Model_Specs.Model_Nbr
+  WHERE Model_Specs.Capacity >= 150
+    AND Model_Specs.Range > 2400;
+
+------------------------- QUERY 4 -------------------------
+
+CREATE VIEW Permutations(Flt_Date, Serial) AS
+SELECT DISTINCT Flt_Sch.Flight_Date,
+                Aircraft.Serial_Nbr
+  FROM Flt_Sch,
+       Aircraft;
+
+CREATE VIEW Flying(Flt_Date, Serial) AS
+SELECT Flt_Sch.Flight_Date,
+       Flt_Sch.Serial_Nbr
+  FROM Flt_Sch;
+
+CREATE VIEW Grounded(Flt_Date, Serial) AS
+SELECT * 
+  FROM Permutations 
+  WHERE NOT EXISTS (SELECT *
+                      FROM Flying
+                      WHERE Permutations.Flt_Date = Flying.Flt_Date
+                        AND Permutations.Serial = Flying.Serial);
+
+SELECT Flt_Date, Serial, Aircraft.Model_Nbr, Model_Specs.Description, Model_Specs.Capacity, Model_Specs.Range
+  FROM Grounded
+    LEFT JOIN Aircraft ON Grounded.Serial = aircraft.Serial_nbr
+    LEFT JOIN Model_Specs ON Aircraft.Model_Nbr = Model_Specs.Model_Nbr
+ORDER BY Flt_Date, Serial;
+
+------------------------- QUERY 5 -------------------------
+
+CREATE VIEW Departures(Cust, Flt#, Flt_Date, DP_Apt, DP_City, TOD) AS
+SELECT RSVN.Cust_Nbr,
+       RSVN.Flight_Nbr,
+       RSVN.Flight_Date,
+       Airport.Airport_Name DP_Airport,
+       City.City_Name DP_City,
+       Flt_Sch.TOD
+  FROM RSVN
+    LEFT JOIN Route ON RSVN.Flight_Nbr = Route.Flight_Nbr
+    LEFT JOIN Airport ON Route.DP_ARPT_Code = Airport.Airport_Code
+    LEFT JOIN City ON Airport.City_Code = City.City_Code
+    LEFT JOIN Flt_Sch ON RSVN.Flight_Nbr = Flt_Sch.Flight_Nbr AND RSVN.Flight_Date = Flt_Sch.Flight_Date;
+
+CREATE VIEW Arrivals(Cust, Flt#, Flt_Date, AR_Apt, AR_City, TOA) AS
+SELECT RSVN.Cust_Nbr,
+       RSVN.Flight_Nbr,
+       RSVN.Flight_Date,
+       Airport.Airport_Name AR_Airport,
+       City.City_Name AR_City,
+       Flt_Sch.TOA
+  FROM RSVN
+    LEFT JOIN Route ON RSVN.Flight_Nbr = Route.Flight_Nbr
+    LEFT JOIN Airport ON Route.AR_ARPT_Code = Airport.Airport_Code
+    LEFT JOIN City ON Airport.City_Code = City.City_Code
+    LEFT JOIN Flt_Sch ON RSVN.Flight_Nbr = Flt_Sch.Flight_Nbr AND RSVN.Flight_Date = Flt_Sch.Flight_Date;
+
+COLUMN Cust HEADING 'Cust #' FORMAT A6
+COLUMN Flt# HEADING 'Flt|Nbr' FORMAT A5
+COLUMN Flt_Date HEADING 'Flt|Date' FORMAT A10
+COLUMN DP_APT FORMAT A17 WORD_WRAP
+COLUMN DP_City FORMAT A12
+COLUMN AR_APT FORMAT A17 WORD_WRAP
+COLUMN AR_City FORMAT A12
+
+Select Departures.Cust,
+       Departures.Flt#,
+       Departures.Flt_Date,
+       Departures.DP_APT,
+       Departures.DP_City,
+       Departures.TOD,
+       Arrivals.AR_Apt,
+       Arrivals.AR_City,
+       Arrivals.TOA
+  FROM Departures
+    LEFT JOIN Arrivals ON Departures.Cust = Arrivals.Cust
+      AND Departures.Flt# = Arrivals. Flt#
+      AND Departures.Flt_Date = Arrivals.Flt_Date
+ORDER BY Cust, Flt_Date;
+
+------------------------- MODIFICATION 1 -------------------------
+
+ALTER SESSION SET NLS_DATE_FORMAT = 'DD-MON-YYYY';
+
+INSERT INTO City (City_Code, City_Name, State_Code)
+ VALUES ('180', 'Kansas City', 'MO');
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('KCI', '180', 'Kansas City Internat. Airport');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('200', 'MEM', 'KCI');
+
+INSERT INTO Route (Flight_Nbr, DP_ARPT_Code, AR_ARPT_Code)
+ VALUES ('421', 'KCI', 'MEM');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('200', '02-DEC-2020', 'T300-009', 'TBD', 'TBD');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('421', '02-DEC-2020', 'T300-009', '1730', '1915');
+
+COMMIT;
+
+SELECT *
+  FROM City;
+SELECT *
+  FROM Airport;
+SELECT *
+  FROM Route;
+SELECT *
+  FROM Flt_Sch;
+
+------------------------- CLEAN UP -------------------------
+
+CLEAR BREAKS;
+CLEAR COLUMNS;
+CLEAR COMPUTES;
+TTITLE OFF;
+
+DROP VIEW REPORT1;
+DROP VIEW REPORT4;
+DROP VIEW REPORT6;
+DROP VIEW PERMUTATIONS;
+DROP VIEW FLYING;
+DROP VIEW GROUNDED;
+DROP VIEW DEPARTURES;
+DROP VIEW ARRIVALS;

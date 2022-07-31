@@ -1,0 +1,59 @@
+---------- Flights on 07/12/2020 ----------
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('110', '12-JUL-2020', 'T100-001', '0800', '0935');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('181', '12-JUL-2020', 'T200-002', '0830', '1130');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('285', '12-JUL-2020', 'T100-007', '0800', '0845');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('333', '12-JUL-2020', 'T200-002', '1700', '2000');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('887', '12-JUL-2020', 'T200-004', '2130', '2215');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('899', '12-JUL-2020', 'T300-009', '1045', '1215');
+
+---------- Flights on 07/13/2020 ----------
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('110', '13-JUL-2020', 'T100-001', '0800', '0935');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('181', '13-JUL-2020', 'T200-002', '0830', '1130');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('285', '13-JUL-2020', 'T300-005', '0800', '0845');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('333', '13-JUL-2020', 'T200-002', '1700', '2000');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('359', '13-JUL-2020', 'T300-005', '2130', '2215');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, TOD, TOA)
+ VALUES ('887', '13-JUL-2020', '1045', '1215');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('899', '13-JUL-2020', 'T100-001', '1400', '1545');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('950', '13-JUL-2020', 'T100-007', '1300', '1500');
+
+---------- Flights on 07/14/2020 ----------
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('110', '14-JUL-2020', 'T100-001', '0800', '0935');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('285', '14-JUL-2020', 'T300-005', '0800', '0845');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, TOD, TOA)
+ VALUES ('359', '14-JUL-2020', '2130', '2215');
+
+INSERT INTO Flt_Sch (Flight_Nbr, Flight_Date, Serial_Nbr, TOD, TOA)
+ VALUES ('899', '14-JUL-2020', 'T300-009', '1400', '1545');

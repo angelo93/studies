@@ -1,0 +1,17 @@
+---------- Airports in Texas ----------
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('AUS', '025', 'Austin Municpl. Airport');
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('HOU', '052', 'Houston Internat. Airport');
+
+---------- Airports in Tennesse ----------
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('MEM', '380', 'Memphis Internat. Airport');
+
+---------- Airports in Illinois ----------
+
+INSERT INTO Airport (Airport_Code, City_Code, Airport_Name)
+ VALUES ('ORD', '520', 'Chicago Internat. Airport');
